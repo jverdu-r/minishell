@@ -12,7 +12,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (res);
 }
 
-int	ft_strlen(const char *str)
+size_t	ft_strlen(const char *str)
 {
 	int	i;
 
@@ -21,44 +21,43 @@ int	ft_strlen(const char *str)
 	i = 0;
 	while (str[i])
 		i++;
-	return (i);
+	return ((size_t)i);
 }
-
-int	ft_wordcount(char const *str, char c)
+int	ft_wordcount(char const *s, char c)
 {
 	int	res;
 	int	trig;
 
 	res = 0;
 	trig = 0;
-	if (!str)
+	if (!s)
 		return (0);
-	while (*str)
+	while (*s)
 	{
-		if (*str != c && trig == 0)
+		if (*s != c && trig == 0)
 		{
 			trig = 1;
 			res++;
 		}
-		else if (*str == c)
+		else if (*s == c)
 			trig = 0;
-		str++;
+		s++;
 	}
 	return (res);
 }
 
-char	*ft_word(char const *str, int st, int end)
+char	*ft_word(char const *s, int st, int end)
 {
 	char	*ptr;
 	int		i;
-	
+
 	i = 0;
 	ptr = malloc(sizeof(char) * (end - st + 1));
-	if (!ptr)
+	if (ptr == NULL)
 		return (0);
 	while (st < end)
 	{
-		ptr[i] = str[i];
+		ptr[i] = s[st];
 		i++;
 		st++;
 	}
@@ -66,7 +65,7 @@ char	*ft_word(char const *str, int st, int end)
 	return (ptr);
 }
 
-char	**ft_split(char const *str, char c)
+char	**ft_split(char const *s, char c)
 {
 	int		index;
 	size_t	a;
@@ -74,18 +73,18 @@ char	**ft_split(char const *str, char c)
 	char	**split;
 
 	split = malloc(sizeof(char *) * (ft_wordcount(s, c) + 1));
-	if (!split)
+	if (split == 0)
 		return (0);
 	index = -1;
 	a = 0;
 	i = 0;
-	while (a <= ft_strlen(str))
+	while (a <= ft_strlen(s))
 	{
-		if (str[a] != c && index < 0)
+		if (s[a] != c && index < 0)
 			index = a;
-		else if ((str[a] == c || a == ft_strlen(str)) && index >= 0)
+		else if ((s[a] == c || a == ft_strlen(s)) && index >= 0)
 		{
-			split[i++] = ft_word(str, index, a);
+			split[i++] = ft_word(s, index, a);
 			index = -1;
 		}
 		a++;

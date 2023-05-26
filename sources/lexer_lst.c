@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 11:45:56 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/05/25 13:35:38 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/05/26 13:07:26 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,9 @@ t_lexer	*lexer_new(char *word, t_token token)
 	new = malloc(sizeof(t_lexer));
 	if (!new)
 		return (NULL);
-	if (word)
-		new->word = word;
-	if (token)
-		new.token = token;
-	new.index = 0;
+	new->word = word;
+	new->token = token;
+	new->index = 0;
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);
@@ -54,15 +52,15 @@ t_lexer *lexer_last(t_lexer *lst)
 		return (NULL);
 	tmp = lst;
 	while (tmp->next != NULL)
-		tmp = tmp = tmp->next;
+		tmp = tmp->next;
 	return (tmp);
 }
 
-void	lexer_del(t_lexer **lst)
+void	lexer_delone(t_lexer **lst)
 {
 	if (lst && *lst)
 	{
-		if (lst_length(*lst) > 1)
+		if (lexer_length(*lst) > 1)
 		{
 			lst[0] = lst[0]->next;
 			free(lst[0]->prev);
@@ -86,13 +84,13 @@ void	lexer_add(t_lexer **head, t_lexer *new)
 	else
 	{
 		new->next = tmp;
-		tmp-prev = new;
+		tmp->prev = new;
 		tmp = new;
 		*head = tmp;
 	}
 }
 
-void	lexer_add_back(t_lexer **head, t_lexer *new)
+void	lexer_addback(t_lexer **head, t_lexer *new)
 {
 	t_lexer	*tmp;
 

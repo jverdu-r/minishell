@@ -6,7 +6,7 @@
 #    By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/24 15:20:41 by jverdu-r          #+#    #+#              #
-#    Updated: 2023/05/24 15:36:56 by jverdu-r         ###   ########.fr        #
+#    Updated: 2023/05/26 12:16:51 by jverdu-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,8 @@ CFLAGS	=	-Wall -Werror -Wextra -I$(INCLUDE)
 RM		=	rm -f
 
 SRCS	=	sources/minishell.c \
+			sources/parser.c \
+			sources/lexer_lst.c \
 			sources/test_functions.c
 
 OBJS	=	$(SRCS:%.c=%.o)
@@ -29,7 +31,7 @@ all:		$(NAME)
 
 $(NAME):	$(OBJS)
 			@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lreadline
-			@echo "Linked into excutable \033 [0;032mminishell\033[0m."
+			@echo "Linked into excutable \033[0;32mminishell\033[0m."
 
 .c.o:		
 			@$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
