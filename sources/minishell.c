@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:15:26 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/05/26 15:36:58 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/05 16:33:55 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ int	main(int argc, char *argv[])
 		}
 		else
 		{
+			//input_filter(input);
 			get_cmds(ft_split(input, ' '));
+			//get_cmds(input);
 			free (input);
 		}
 	}

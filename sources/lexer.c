@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:43:37 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/05/26 15:43:50 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/01 16:54:07 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	token_parser(char	*input)
 	else
 		return (0);
 }
+
 void	get_cmds(char **input)
 {
 	int		i;
@@ -69,4 +70,3 @@ void	get_cmds(char **input)
 //		printf("ERROR could not reserve lexer's memory");
 	free(input);
 }
-

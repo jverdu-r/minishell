@@ -92,3 +92,48 @@ char	**ft_split(char const *s, char c)
 	split[i] = 0;
 	return (split);
 }
+
+char	*ft_strdup(const char *s1)
+{
+	char	*ptr;
+	int		i;
+
+	i = 0;
+	ptr = malloc(sizeof(char) * (ft_strlen(s1) + 1));
+	if (ptr == NULL)
+		return (NULL);
+	while (s1[i] != 0)
+	{
+		ptr[i] = s1[i];
+		i++;
+	}
+	ptr[i] = 0;
+	return (ptr);
+}
+
+char	*ft_substr(const char *s, unsigned int start, size_t len)
+{
+	char	*ptr;
+	size_t	nlen;
+	size_t	b;
+
+	b = 0;
+	if (s == NULL)
+		return (NULL);
+	if (start > ft_strlen(s))
+		return (ft_strdup(""));
+	nlen = ft_strlen(s + start);
+	if (nlen < len)
+		len = nlen;
+	ptr = malloc(sizeof(char) * (len + 1));
+	if (ptr == NULL)
+		return (NULL);
+	while (b < len && s[start] != 0)
+	{
+		ptr[b] = s[start];
+		start++;
+		b++;
+	}
+	ptr[b] = '\0';
+	return (ptr);
+}
