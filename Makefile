@@ -16,7 +16,7 @@ CC		=	gcc
 
 INCLUDE	=	includes
 
-CFLAGS	=	-Wall -Werror -Wextra -I$(INCLUDE)
+CFLAGS	=	-Wall -Werror -Wextra -g -I$(INCLUDE)
 
 RM		=	rm -f
 

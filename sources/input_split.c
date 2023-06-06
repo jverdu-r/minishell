@@ -6,37 +6,11 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:34:22 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/05 16:42:05 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/06 19:00:56 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	show_list(t_lexer *lexer_list)
-{
-	//funcion de comprobacion
-	t_lexer	*tmp;
-
-	tmp = lexer_list;
-	while (tmp)
-	{
-		if (tmp->word)
-			printf("\n%s index: %d\n", tmp->word, tmp->index);
-		else if (tmp->token > 0)
-			printf("\ntoken: %d index: %d\n", tmp->token, tmp->index);
-		else
-			printf("lexer is empty");
-		tmp = tmp->next;
-	}
-	while (lexer_list)
-	{
-		if (lexer_list->word)
-			free(lexer_list->word);
-		lexer_list = lexer_list->next;
-		free(lexer_list->prev);
-	}
-	free(lexer_list);
-}
 
 int	is_white_space(char c)
 {
@@ -45,69 +19,91 @@ int	is_white_space(char c)
 	return (0);
 }
 
-int	quote_handler(t_lexer *lexer_list, char *input,  int i)
+int	quote_handler(t_lexer **lexer_list, char *input,  int i)
 {
 	int		j;
 
 	j = i + 1;
 	while (input[j] != input[i])
 		j++;
-	lexer_addback(&lexer_list, lexer_new(ft_substr(input, i, j), 0));
+	lexer_addback(lexer_list, lexer_new(ft_substr(input, i, j - i), 0));
 	return (j);
 }
 
-int	token_handler(t_lexer *lexer_list, char *input, int i)
+int	token_handler(t_lexer **lexer_list, char *input, int i)
 {
-	if (input[i] == 124)
-		lexer_addback(&lexer_list, lexer_new(NULL, 1));
-	if (input[i] == 60)
+	if (input[i] == '|')
+		lexer_addback(lexer_list, lexer_new(NULL, 1));
+	if (input[i] == '<')
 	{
-		if (input[i + 1] == 60)
+		if (input[i + 1] == '<')
 		{
-			lexer_addback(&lexer_list, lexer_new(NULL, 3));
+			lexer_addback(lexer_list, lexer_new(NULL, 3));
 			return (2);
 		}
 		else
-			lexer_addback(&lexer_list, lexer_new(NULL, 2));
+			lexer_addback(lexer_list, lexer_new(NULL, 2));
 	}
-	if (input[i] == 62)
+	if (input[i] == '>')
 	{
-		if (input[i + 1] == 62)
+		if (input[i + 1] == '>')
 		{
-			lexer_addback(&lexer_list, lexer_new(NULL, 5));
+			lexer_addback(lexer_list, lexer_new(NULL, 5));
 			return (2);
 		}
 		else
-			lexer_addback(&lexer_list, lexer_new(NULL, 4));
+			lexer_addback(lexer_list, lexer_new(NULL, 4));
 	}
 	return (1);
 }
 
+void show_lexer(t_lexer	*lexer_list)
+{
+
+	while (lexer_list)
+	{
+		if (lexer_list->word)
+		{
+			printf("\n%s\n", lexer_list->word);
+			// free(lexer_list->word);
+		}
+		else
+			printf("\n%d\n", lexer_list->token);
+		lexer_list = lexer_list->next;
+		// free(lexer_list->prev);
+	}
+	//free(lexer_list);
+}
+
 void	input_filter(char	*input)
 {
-	int		i;
-	int		j;
+	int		end_token;
+	int		start_token;
 	t_lexer	*lexer_list;
 
-	i = 0;
-	printf("\ndatos : %s", input);
-	while (input[i])
+	end_token = 0;
+	start_token = 0;
+	lexer_list = NULL;
+	while (input[end_token])
 	{
-		j = i;
-		if (input[i] == 34 || input[i] == 39)
-			i += quote_handler(lexer_list,input,  i);
-		else if (input[i] == 124 || input[i] == 60 || input[i] == 62)
-			i += token_handler(lexer_list,input,  i);
-		else
+		if (input[end_token] == '\"' || input[end_token] == '\'')
 		{
-			j = i;
-			while (!is_white_space(input[i]) && input[i])
-				i++;
+			end_token += quote_handler(&lexer_list, input, start_token);;
+			start_token = end_token;
 		}
-		if (j != i)
-			lexer_addback(&lexer_list, lexer_new(ft_substr(input, j, i), 0));
-		i++;
-		printf("\n%d", i);
+		if (input[end_token] == '|' || input[end_token] == '<' || input[end_token] == '>')
+		{
+			if (start_token != end_token)
+				lexer_addback(&lexer_list, lexer_new(ft_substr(input, start_token, end_token-start_token), 0)); 
+			end_token += token_handler(&lexer_list,input,  end_token);
+			start_token = end_token;
+		
+		}
+		else
+			end_token++;
 	}
-	show_list(lexer_list);
+	if (end_token!=start_token)
+		lexer_addback(&lexer_list, lexer_new(ft_substr(input, start_token, end_token-start_token), 0));
+	show_lexer(lexer_list);
 }
+
