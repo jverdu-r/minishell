@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:34:22 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/06 19:00:56 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/07 12:25:10 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	quote_handler(t_lexer **lexer_list, char *input,  int i)
 	j = i + 1;
 	while (input[j] != input[i])
 		j++;
+	j++;
 	lexer_addback(lexer_list, lexer_new(ft_substr(input, i, j - i), 0));
 	return (j);
 }
@@ -59,51 +60,60 @@ int	token_handler(t_lexer **lexer_list, char *input, int i)
 
 void show_lexer(t_lexer	*lexer_list)
 {
+	t_lexer	*tmp;
 
-	while (lexer_list)
+	tmp = lexer_list;
+	while (tmp)
+	{
+		if (tmp->word)
+			printf("\n%s\n", tmp->word);
+		else
+			printf("\n%d\n", tmp->token);
+		tmp = tmp->next;
+	}
+/*	while (lexer_list)
 	{
 		if (lexer_list->word)
-		{
-			printf("\n%s\n", lexer_list->word);
-			// free(lexer_list->word);
-		}
-		else
-			printf("\n%d\n", lexer_list->token);
+			free(lexer_list->word);
 		lexer_list = lexer_list->next;
-		// free(lexer_list->prev);
+		tmp = lexer_list->prev;
+		lexer_list->prev = NULL;
+		tmp->next = NULL;
+		free(tmp);
 	}
-	//free(lexer_list);
+	free(lexer_list);*/
 }
 
 void	input_filter(char	*input)
 {
-	int		end_token;
-	int		start_token;
-	t_lexer	*lexer_list;
+	int		end_tk;
+	int		st_tk;
+	t_lexer	*lexer;
 
-	end_token = 0;
-	start_token = 0;
-	lexer_list = NULL;
-	while (input[end_token])
+	end_tk = 0;
+	st_tk = 0;
+	lexer = NULL;
+	while (input[end_tk])
 	{
-		if (input[end_token] == '\"' || input[end_token] == '\'')
+		if (input[end_tk] == '\"' || input[end_tk] == '\'')
 		{
-			end_token += quote_handler(&lexer_list, input, start_token);;
-			start_token = end_token;
+			end_tk += quote_handler(&lexer, input, st_tk);
+			end_tk = end_tk - st_tk;
+			st_tk = end_tk;
 		}
-		if (input[end_token] == '|' || input[end_token] == '<' || input[end_token] == '>')
+		if (input[end_tk] == '|' || input[end_tk] == '<' || input[end_tk] == '>')
 		{
-			if (start_token != end_token)
-				lexer_addback(&lexer_list, lexer_new(ft_substr(input, start_token, end_token-start_token), 0)); 
-			end_token += token_handler(&lexer_list,input,  end_token);
-			start_token = end_token;
-		
+			if (st_tk != end_tk && (input[end_tk] != '|' || input[end_tk] != '<' ||
+						input[end_tk] != '>'))
+				lexer_addback(&lexer, lexer_new(ft_substr(input, st_tk, end_tk-st_tk), 0)); 
+			end_tk += token_handler(&lexer,input,  end_tk);
+			st_tk = end_tk;	
 		}
 		else
-			end_token++;
+			end_tk++;
 	}
-	if (end_token!=start_token)
-		lexer_addback(&lexer_list, lexer_new(ft_substr(input, start_token, end_token-start_token), 0));
-	show_lexer(lexer_list);
+	if (end_tk!=st_tk)
+		lexer_addback(&lexer, lexer_new(ft_substr(input, st_tk, end_tk-st_tk), 0));
+	show_lexer(lexer);
 }
 
