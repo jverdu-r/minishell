@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:15:26 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/06 15:49:36 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/07 13:06:12 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,16 @@
 int	main(int argc, char *argv[])
 {
 	char	*input;
-	// char	*err;
 	int		loop;
 
 	(void)argc;
 	(void)argv;
-	// err = argv[1];
 	rl_on_new_line();
 	loop = 1;
-	/*if (argc > 1)
-	{
-		printf("ERROR too many arguments"); 
-		return (1);
-	}*/
 	while (loop != 0)
 	{
-		input = readline("minishel>");
-		// input = argv[1];
-		// printf("inputline\t%s\n",input);
+
+		input = readline("minishell>");
 		add_history(input);
 		loop = ft_strcmp(input, "EXIT");
 		if (loop == 0)
@@ -45,7 +37,6 @@ int	main(int argc, char *argv[])
 			
 			input_filter(input);
 			//get_cmds(ft_split(input, ' '));
-			//get_cmds(input);
 			free (input);
 		}
 	}

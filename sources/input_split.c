@@ -6,29 +6,25 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:34:22 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/07 12:25:10 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/07 14:34:42 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	is_white_space(char c)
-{
-	if (c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r' || c == ' ')
-		return (1);
-	return (0);
-}
-
-int	quote_handler(t_lexer **lexer_list, char *input,  int i)
+int	quote_handler(t_lexer **lexer_list, char *input,  int *st_tk, int end_tk)
 {
 	int		j;
 
-	j = i + 1;
-	while (input[j] != input[i])
+	j = *st_tk + 1;
+	while (input[j] != input[*st_tk])
 		j++;
 	j++;
-	lexer_addback(lexer_list, lexer_new(ft_substr(input, i, j - i), 0));
-	return (j);
+	lexer_addback(lexer_list, lexer_new(ft_substr(input, *st_tk, j - *st_tk), 0));
+	end_tk += j;
+	end_tk = end_tk - *st_tk;
+	*st_tk = end_tk;
+	return (end_tk);
 }
 
 int	token_handler(t_lexer **lexer_list, char *input, int i)
@@ -84,7 +80,7 @@ void show_lexer(t_lexer	*lexer_list)
 	free(lexer_list);*/
 }
 
-void	input_filter(char	*input)
+void	input_filter(char *input)
 {
 	int		end_tk;
 	int		st_tk;
@@ -96,16 +92,12 @@ void	input_filter(char	*input)
 	while (input[end_tk])
 	{
 		if (input[end_tk] == '\"' || input[end_tk] == '\'')
-		{
-			end_tk += quote_handler(&lexer, input, st_tk);
-			end_tk = end_tk - st_tk;
-			st_tk = end_tk;
-		}
+			end_tk = quote_handler(&lexer, input, &st_tk, end_tk);
 		if (input[end_tk] == '|' || input[end_tk] == '<' || input[end_tk] == '>')
 		{
 			if (st_tk != end_tk && (input[end_tk] != '|' || input[end_tk] != '<' ||
 						input[end_tk] != '>'))
-				lexer_addback(&lexer, lexer_new(ft_substr(input, st_tk, end_tk-st_tk), 0)); 
+				lexer_addback(&lexer, lexer_new(ft_substr(input, st_tk, end_tk-st_tk), 0));
 			end_tk += token_handler(&lexer,input,  end_tk);
 			st_tk = end_tk;	
 		}
@@ -116,4 +108,3 @@ void	input_filter(char	*input)
 		lexer_addback(&lexer, lexer_new(ft_substr(input, st_tk, end_tk-st_tk), 0));
 	show_lexer(lexer);
 }
-
