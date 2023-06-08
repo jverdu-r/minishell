@@ -6,13 +6,13 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 11:45:56 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/05 16:10:51 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/07 15:33:10 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_lexer	*lexer_new(char *word, t_token token)
+t_lexer	*l_new(char *word, t_token token)
 {
 	t_lexer	*new;
 
@@ -27,7 +27,7 @@ t_lexer	*lexer_new(char *word, t_token token)
 	return (new);
 }
 
-t_lexer *lexer_last(t_lexer *lst)
+t_lexer *l_last(t_lexer *lst)
 {
 	t_lexer	*tmp;
 
@@ -39,11 +39,11 @@ t_lexer *lexer_last(t_lexer *lst)
 	return (tmp);
 }
 
-void	lexer_delone(t_lexer **lst)
+void	l_delone(t_lexer **lst)
 {
 	if (lst && *lst)
 	{
-		if (lexer_length(*lst) > 1)
+		if (l_length(*lst) > 1)
 		{
 			lst[0] = lst[0]->next;
 			free(lst[0]->prev);
@@ -57,7 +57,7 @@ void	lexer_delone(t_lexer **lst)
 	}
 }
 
-void	lexer_add(t_lexer **head, t_lexer *new)
+void	l_add(t_lexer **head, t_lexer *new)
 {
 	t_lexer	*tmp;
 
@@ -74,7 +74,7 @@ void	lexer_add(t_lexer **head, t_lexer *new)
 	}
 }
 
-void	lexer_addback(t_lexer **head, t_lexer *new)
+void	l_addback(t_lexer **head, t_lexer *new)
 {
 	t_lexer	*tmp;
 

@@ -6,7 +6,7 @@
 #    By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/24 15:20:41 by jverdu-r          #+#    #+#              #
-#    Updated: 2023/06/07 12:37:53 by jverdu-r         ###   ########.fr        #
+#    Updated: 2023/06/08 15:11:04 by jverdu-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,25 +14,27 @@ NAME	=	minishell
 
 CC		=	gcc
 
-INCLUDE	=	includes
+INCLUDE	=	includes -I $(READ)/include
 
 CFLAGS	=	-Wall -Werror -Wextra -g -I$(INCLUDE)
 
 RM		=	rm -f
 
 SRCS	=	sources/minishell.c \
-			sources/lexer.c \
 			sources/lexer_lst.c \
 			sources/list_utils.c \
+			sources/signals.c \
 			sources/input_split.c \
 			sources/test_functions.c
 
 OBJS	=	$(SRCS:%.c=%.o)
 
+READ	=   /System/Volumes/Data/Users/jverdu-r/.brew/Cellar/readline/8.2.1
+
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
-			@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lreadline
+			@$(CC) $(CFLAGS) $(OBJS) -lreadline -L $(READ)/lib -o $(NAME)
 			@echo "Linked into excutable \033[0;32mminishell\033[0m."
 
 .c.o:		

@@ -6,32 +6,47 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:15:26 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/07 13:06:12 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:27:50 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+int	exit_code(void)
+{
+	rl_clear_history();
+	printf("EXIT\n");
+	exit(0);
+}
+
+void	leaks(void)
+{
+	system("leaks minishell");
+}
+
 int	main(int argc, char *argv[])
 {
 	char	*input;
-	int		loop;
+//	int		loop;
 
+	atexit(leaks);
 	(void)argc;
 	(void)argv;
 	rl_on_new_line();
-	loop = 1;
-	while (loop != 0)
+//	loop = 1;
+	while (1)
 	{
-
+		signals_do();
 		input = readline("minishell>");
 		add_history(input);
-		loop = ft_strcmp(input, "EXIT");
-		if (loop == 0)
+		if (input == NULL)
+			return (exit_code());
+	//	loop = ft_strcmp(input, "EXIT");
+	/*	if (loop == 0)
 		{
 			clear_history();
 			free(input);
-		}
+		}*/
 		else
 		{
 			
