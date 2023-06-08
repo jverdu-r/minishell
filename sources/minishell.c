@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:15:26 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/08 15:27:50 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:33:42 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, char *argv[])
 //	loop = 1;
 	while (1)
 	{
-		signals_do();
+		signals_workout();
 		input = readline("minishell>");
 		add_history(input);
 		if (input == NULL)
