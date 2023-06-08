@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:07:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/08 15:09:18 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:34:08 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct	s_cmds
 }	t_cmds;
 
 // Signal functions
-void	signals_do(void);
+void	signals_workout(void);
 
 // Parser functions
 int		parser_length(t_cmds *list);
