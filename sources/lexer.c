@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:43:37 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/01 16:54:07 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/09 12:46:19 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,45 +28,33 @@ int	token_parser(char	*input)
 		return (0);
 }
 
-void	get_cmds(char **input)
+void	show_split(char **split)
 {
-	int		i;
-	int		tk;
-	t_lexer	*lexer;
-	t_lexer	*tmp;
+	int	x;
 
-	lexer = NULL;
-	i = 0;
-	tk = 0;
-	while (input[i])
+	x = 0;
+	while (split[x])
 	{
-		tk =token_parser(input[i]);
-		if (tk != 0)
-			lexer_addback(&lexer, lexer_new(NULL, tk));
-		else
-			lexer_addback(&lexer, lexer_new(input[i], 0));
-		tk = 0;
-		i++;
+		printf("%s ", split[x]);
+		x++;
 	}
-	while (lexer->prev)
-		lexer = lexer->prev;
-	tmp = lexer;
-	while (tmp)
+	printf("\n");
+}
+void	get_cmds(t_lexer *lex)
+{
+	t_cmds	*cmds;
+
+	cmds = NULL;
+	while (lex)
 	{
-		if (tmp->word)
-			printf("%s ", tmp->word);
-		else
-			printf("%d ", tmp->token);
-		printf("index: %d\n", tmp->index);
-		tmp = tmp->next;
+		if (lex->word)
+		{
+			parser_addback(&cmds, parser_new(ft_split(lex->word, ' '), 0));
+		}
+		else if (lex->token)
+			parser_addback(&cmds, parser_new(NULL, lex->token));
+		lex = lex->next;
 	}
-	while (lexer->next)
-	{
-		tmp = lexer->next;
-		lexer_delone(&lexer);
-		lexer = tmp;
-	}
-//	else
-//		printf("ERROR could not reserve lexer's memory");
-	free(input);
+	l_free(lex);
+	show_parser(cmds);
 }

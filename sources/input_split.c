@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:34:22 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/08 10:41:20 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/09 12:18:51 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	token_handler(t_lexer **lexer_list, char *input, int i)
 	return (1);
 }
 
-void	input_filter(char *ipt)
+t_lexer	*input_filter(char *ipt)
 {
 	int		ed_tk;
 	int		st_tk;
@@ -82,5 +82,5 @@ void	input_filter(char *ipt)
 	}
 	if (ed_tk != st_tk)
 		l_addback(&lex, l_new(ft_substr(ipt, st_tk, ed_tk - st_tk), 0));
-	show_lexer(lex);
+	return (lex);
 }

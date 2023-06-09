@@ -6,7 +6,7 @@
 #    By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/24 15:20:41 by jverdu-r          #+#    #+#              #
-#    Updated: 2023/06/08 15:11:04 by jverdu-r         ###   ########.fr        #
+#    Updated: 2023/06/09 12:47:16 by jverdu-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,9 @@ CFLAGS	=	-Wall -Werror -Wextra -g -I$(INCLUDE)
 RM		=	rm -f
 
 SRCS	=	sources/minishell.c \
+			sources/lexer.c \
 			sources/lexer_lst.c \
+			sources/input_lst.c \
 			sources/list_utils.c \
 			sources/signals.c \
 			sources/input_split.c \
