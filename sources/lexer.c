@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:43:37 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/09 12:46:19 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/12 10:30:36 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	get_cmds(t_lexer *lex)
 	t_cmds	*cmds;
 
 	cmds = NULL;
-	while (lex)
+	while (lex->next)
 	{
 		if (lex->word)
 		{
@@ -55,6 +55,10 @@ void	get_cmds(t_lexer *lex)
 			parser_addback(&cmds, parser_new(NULL, lex->token));
 		lex = lex->next;
 	}
+	if (lex->word)
+		parser_addback(&cmds, parser_new(ft_split(lex->word, ' '), 0));
+	else if (lex->token)
+		parser_addback(&cmds, parser_new(NULL, lex->token));
 	l_free(lex);
 	show_parser(cmds);
 }
