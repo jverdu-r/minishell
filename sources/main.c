@@ -6,44 +6,30 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 10:28:15 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/17 12:00:25 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/17 13:31:54 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include "../includes/libft/libft.h"
 
-int	exit_code(void)
+void	leaks(void)
 {
-	rl_clear_history();
-	printf("EXIT\n");
-	exit(0);
+	system("leaks minishell");
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*prompt;
+	t_toolbox	tools;
 
-	(void)envp; //silenciado el entorno hasta ser usado
+	atexit(leaks);
 	if (argc != 1 || argv[1])
 	{
 		printf("Minishell must be executed wihtout arguments");
 		exit(0);
 	}
-	while (1)
-	{
-		signals_workout();
-		prompt = readline("minishell>");
-		if (!prompt)
-			return (exit_code());
-		else if (ft_strcmp(prompt, "") == 0)
-			free(prompt);
-		else
-		{
-			add_history(prompt);
-			printf("\n%s\n", prompt);
-			free(prompt);
-		}
-	}
+	tools.envp = envp_dup(envp);
+	tools_load(&tools);
+	pwd_search(&tools);
+	minishell_loop(&tools);
 	return (0);
 }

@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/04 12:01:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/17 12:06:47 by jverdu-r         ###   ########.fr       */
+/*   Created: 2023/06/08 14:52:14 by jverdu-r          #+#    #+#             */
+/*   Updated: 2023/06/17 12:31:25 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/minishell.h"
 
-void	ft_putnbr_fd(int n, int fd)
+static void	signal_int(int code)
 {
-	char	c;
+	(void)code;
+	printf("minishell>");
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 
-	if (n == -2147483648)
-		ft_putstr_fd("-2147483648", fd);
-	else
-	{
-		if (n < 0)
-		{
-			write (fd, "-", 1);
-			n = n * -1;
-		}
-		if (n > 9)
-		{
-			ft_putnbr_fd(n / 10, fd);
-		}
-		c = (n % 10) + '0';
-		write (fd, &c, 1);
-	}
+}
+void	signals_workout(void)
+{
+	signal(SIGINT, signal_int);
+	signal(SIGQUIT, SIG_IGN);
 }

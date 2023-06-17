@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/08 14:52:14 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/14 19:56:26 by jverdu-r         ###   ########.fr       */
+/*   Created: 2023/06/17 12:58:17 by jverdu-r          #+#    #+#             */
+/*   Updated: 2023/06/17 13:01:33 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-static void	signal_int(int code)
+void	free_arr(char **arr)
 {
-	(void)code;
-	printf("minishell>");
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	int i;
 
-}
-void	signals_workout(void)
-{
-	signal(SIGINT, signal_int);
-	signal(SIGQUIT, SIG_IGN);
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
 }

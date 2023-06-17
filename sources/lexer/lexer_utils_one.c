@@ -1,83 +1,81 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_lst.c                                       :+:      :+:    :+:   */
+/*   lexer_utils_one.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/01 14:52:32 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/17 14:33:41 by jverdu-r         ###   ########.fr       */
+/*   Created: 2023/06/17 14:21:42 by jverdu-r          #+#    #+#             */
+/*   Updated: 2023/06/17 14:28:12 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-t_cmds	*parser_new(char **cmd, int token)
+t_lexer	*lexer_new(char	*str, t_token token)
 {
-	t_cmds	*new;
+	t_lexer	*new;
 
-	new = malloc(sizeof(t_cmds));
+	new = malloc(sizeof(t_lexer));
 	if (!new)
 		return (NULL);
-	new->cmd = cmd;
-//	new->builtins = builtin
-	new->redirs = token;
-//	new->file_name	= lexer_file(&lexer);
-//	new->redirections = lex_redirect(lexer);
+	new->str = str;
+	new->token = token;
+	new->index = 0;
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);
 }
 
-t_cmds *parser_last(t_cmds *lst)
+t_lexer	*lexer_last(t_lexer *list)
 {
-	t_cmds	*tmp;
+	t_lexer	tmp;
 
-	if (!lst)
+	if (!list)
 		return (NULL);
-	tmp = lst;
-	while (tmp->next != NULL)
+	tmp = list;
+	while (tmp->next)
 		tmp = tmp->next;
 	return (tmp);
 }
 
-void	parser_delone(t_cmds **lst)
+void	lexer_delone(t_lexer **list)
 {
-	if (lst && *lst)
+	if (list && *list)
 	{
-		if (parser_length(*lst) > 1)
+		if (sp_cmds_length(*list) > 1)
 		{
-			lst[0] = lst[0]->next;
-			free(lst[0]->prev);
-			lst[0]->prev = NULL;
+			list[0] = list[0]->next;
+			free(list[0]->prev);
+			list[0]->prev = NULL;
 		}
 		else
 		{
-			free(lst[0]);
+			free(list[0]);
 			lst[0] = NULL;
 		}
 	}
 }
 
-void	parser_add(t_cmds **head, t_cmds *new)
+void	lexer_add(t_lexer **head, t_lexer *new)
 {
-	t_cmds	*tmp;
-
+	t_sp_cmds	*tmp;
+	
 	tmp = *head;
 	if (*head == NULL)
 		*head = new;
 	else
 	{
-		new->next = tmp;;
+		new->next = tmp;
 		tmp->prev = new;
 		tmp = new;
 		*head = tmp;
 	}
 }
 
-void	parser_addback(t_cmds **head, t_cmds *new)
+void	lexer_addback(t_lexer **head, t_lexer *new)
 {
-	t_cmds	*tmp;
+	t_sp_cmds	*tmp;
 
 	tmp = *head;
 	if (*head == NULL)
