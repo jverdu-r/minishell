@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/24 15:07:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/17 12:03:33 by jverdu-r         ###   ########.fr       */
+/*   Created: 2022/01/19 19:19:16 by jverdu-r          #+#    #+#             */
+/*   Updated: 2022/01/24 19:52:25 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-#define MINISHELL_H
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <signal.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "libft/libft.h"
-
-//signal functions
-void	signals_workout(void);
-
-#endif
+int	ft_toupper(int a)
+{
+	if (a > 96 && a < 123)
+		return (a - 32);
+	else
+		return (a);
+}

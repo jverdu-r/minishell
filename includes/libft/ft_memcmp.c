@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/24 15:07:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/17 12:03:33 by jverdu-r         ###   ########.fr       */
+/*   Created: 2022/01/20 17:07:27 by jverdu-r          #+#    #+#             */
+/*   Updated: 2022/02/07 16:35:19 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-#define MINISHELL_H
-
 #include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <signal.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "libft/libft.h"
 
-//signal functions
-void	signals_workout(void);
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
+{
+	unsigned long	a;
 
-#endif
+	a = 0;
+	while (a < n)
+	{
+		if (((unsigned char *)s1)[a] != ((unsigned char *)s2)[a])
+		{
+			return (((unsigned char *)s1)[a] - ((unsigned char *)s2)[a]);
+		}
+		a++;
+	}
+	return (0);
+}

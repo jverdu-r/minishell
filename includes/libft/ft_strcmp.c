@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/24 15:07:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/17 12:03:33 by jverdu-r         ###   ########.fr       */
+/*   Created: 2022/01/19 19:49:07 by jverdu-r          #+#    #+#             */
+/*   Updated: 2023/06/17 11:58:31 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-#define MINISHELL_H
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	int	a;
+	int	res;
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <signal.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "libft/libft.h"
-
-//signal functions
-void	signals_workout(void);
-
-#endif
+	a = 0;
+	while (s1[a] != 0 && s2[a] != 0 && s1[a] == s2[a])
+	{
+		a++;
+	}
+	res = s1[a] - s2[a];
+	return (res);
+}

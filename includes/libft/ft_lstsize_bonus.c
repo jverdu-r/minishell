@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/24 15:07:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/17 12:03:33 by jverdu-r         ###   ########.fr       */
+/*   Created: 2022/02/14 17:45:41 by jverdu-r          #+#    #+#             */
+/*   Updated: 2022/02/15 16:47:32 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-#define MINISHELL_H
+#include "libft.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <signal.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "libft/libft.h"
+int	ft_lstsize(t_list *list)
+{
+	int		len;
+	t_list	*temp;
 
-//signal functions
-void	signals_workout(void);
-
-#endif
+	len = 0;
+	temp = list;
+	if (!list)
+		return (0);
+	while (temp->next != NULL)
+	{
+		temp = temp->next;
+		len++;
+	}
+	if (temp->next == NULL)
+		len++;
+	return (len);
+}

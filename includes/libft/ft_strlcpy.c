@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/24 15:07:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/17 12:03:33 by jverdu-r         ###   ########.fr       */
+/*   Created: 2022/01/19 18:34:15 by jverdu-r          #+#    #+#             */
+/*   Updated: 2022/02/08 17:06:27 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-#define MINISHELL_H
+#include "libft.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <signal.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "libft/libft.h"
+size_t	ft_strlcpy(char *dst, const char *src, size_t destsize)
+{
+	size_t	len;
+	size_t	newlen;
 
-//signal functions
-void	signals_workout(void);
-
-#endif
+	len = ft_strlen(src);
+	if (destsize == 0)
+		return (len);
+	if (len >= destsize)
+		newlen = destsize - 1;
+	else
+		newlen = len;
+	ft_memcpy(dst, src, newlen);
+	dst[newlen] = 0;
+	return (len);
+}

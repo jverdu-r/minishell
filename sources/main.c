@@ -6,11 +6,12 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 10:28:15 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/17 10:54:40 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/17 12:00:25 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include "../includes/libft/libft.h"
 
 int	exit_code(void)
 {
