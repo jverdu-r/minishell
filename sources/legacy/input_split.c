@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   input_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:34:22 by jverdu-r          #+#    #+#             */
+<<<<<<< HEAD:sources/input_split.c
+/*   Updated: 2023/06/08 17:52:09 by daparici         ###   ########.fr       */
+=======
 /*   Updated: 2023/06/14 16:05:03 by jverdu-r         ###   ########.fr       */
+>>>>>>> 2e6bdc2bff8ec99513594b2b36ef616cea68cdf7:sources/legacy/input_split.c
 /*                                                                            */
 /* ************************************************************************** */
 

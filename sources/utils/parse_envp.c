@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_envp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 12:33:17 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/19 16:13:43 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/19 19:46:08 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,22 @@ int	pwd_search(t_toolbox *tools)
 	return (i);
 }
 
-char	**envp_dup(char	**envp)
+char	**st_envp(t_toolbox *tools, char **envp)
+{
+	int		i;
+	int		k;
+	char	*index;
+	char	**sort_env;
+
+	i = 0;
+	while (envp[i])
+		i++;
+	index = ft_calloc(sizeof(int), i);
+	sort_env = ft_calloc(sizeof(char *), i + 1);
+	
+}
+
+char	**envp_dup(char	**envp, t_toolbox *tools)
 {
 	char	**tmp;
 	int		i;
@@ -52,5 +67,8 @@ char	**envp_dup(char	**envp)
 		}
 		i++;
 	}
+	tools->sort_env = st_envp(tools, envp);
 	return (tmp);
 }
+
+

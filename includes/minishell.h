@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:07:55 by jverdu-r          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/06/19 19:42:20 by jverdu-r         ###   ########.fr       */
+=======
+/*   Updated: 2023/06/19 19:53:37 by daparici         ###   ########.fr       */
+>>>>>>> 36aa9fb6edf5fffe18dd470af13bdfadc06e7616
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +50,19 @@ typedef struct	s_sp_cmds
 	struct s_sp_cmds	*prev;
 }	t_sp_cmds;
 
+typedef struct s_envp
+{
+	char	*var;
+	void	*next;
+}	t_envp;
+
 typedef struct s_toolbox
 {
 	char		*args;
 	char		**envp;
+	t_envp		envp;
+	t_envp		sort_envp;
+	char		*env_rute;
 	char		*pwd;
 	char		*old_pwd;
 	t_sp_cmds	*sp_cmds;
@@ -89,7 +102,8 @@ int	minishell_loop(t_toolbox *tools);
 int	tools_load(t_toolbox *tools);
 
 //enviroment functions
-char	**envp_dup(char **envp);
+char	**envp_dup(char **envp, t_toolbox *tools);
+char	 **st_envp(t_toolbox *tools, char **envp);
 int		pwd_search(t_toolbox *tools);
 
 //utility functions

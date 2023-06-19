@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   input_lst.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 11:45:56 by jverdu-r          #+#    #+#             */
+<<<<<<< HEAD:sources/lexer_lst.c
+/*   Updated: 2023/06/08 17:50:53 by daparici         ###   ########.fr       */
+=======
 /*   Updated: 2023/06/09 12:45:13 by jverdu-r         ###   ########.fr       */
+>>>>>>> 2e6bdc2bff8ec99513594b2b36ef616cea68cdf7:sources/legacy/input_lst.c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +31,7 @@ t_lexer	*l_new(char *word, t_token token)
 	return (new);
 }
 
-t_lexer *l_last(t_lexer *lst)
+t_lexer	*l_last(t_lexer *lst)
 {
 	t_lexer	*tmp;
 

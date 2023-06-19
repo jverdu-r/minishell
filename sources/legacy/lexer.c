@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:43:37 by jverdu-r          #+#    #+#             */
+<<<<<<< HEAD:sources/lexer.c
+/*   Updated: 2023/06/08 16:50:07 by daparici         ###   ########.fr       */
+=======
 /*   Updated: 2023/06/13 15:37:19 by jverdu-r         ###   ########.fr       */
+>>>>>>> 2e6bdc2bff8ec99513594b2b36ef616cea68cdf7:sources/legacy/lexer.c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +39,18 @@ void	show_split(char **split)
 	x = 0;
 	while (split[x])
 	{
+<<<<<<< HEAD:sources/lexer.c
+		tk = token_parser(input[i]);
+		if (tk != 0)
+			lexer_addback(&lexer, lexer_new(NULL, tk));
+		else
+			lexer_addback(&lexer, lexer_new(input[i], 0));
+		tk = 0;
+		i++;
+=======
 		printf("%s ", split[x]);
 		x++;
+>>>>>>> 2e6bdc2bff8ec99513594b2b36ef616cea68cdf7:sources/legacy/lexer.c
 	}
 	printf("\n");
 }
