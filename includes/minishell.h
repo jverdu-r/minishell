@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:07:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/19 17:59:00 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/19 19:42:20 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,10 @@ void		sp_cmds_show(t_sp_cmds *list); //frees list  only for testing
 int			sp_cmds_length(t_sp_cmds *list);
 t_sp_cmds	*sp_cmds_new(char **cmd);
 t_sp_cmds	*sp_cmds_last(t_sp_cmds *list);
+
+//parse functions
+int	token_reader(t_toolbox *tools);
+int	token_handler(char *args, int i, t_lexer *list);
 
 //loop functions
 int	minishell_loop(t_toolbox *tools);

@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 12:14:37 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/19 18:02:06 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/19 19:11:27 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int	minishell_loop(t_toolbox *tools)
 		else
 		{
 			add_history(tools->args);
-			if (!handle_quotes(tools->args))
-				printf("\n%s\n", tools->args);
+			/*if (!handle_quotes(tools->args))
+				handle_tokens(tools->args);*/
 			free(tools->args);
 		}
 	}
