@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 10:28:15 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/19 16:52:10 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/19 19:28:44 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char **argv, char **envp)
 		printf("Minishell must be executed wihtout arguments");
 		exit(0);
 	}
-	tools.envp = envp_dup(envp);
+	tools.envp = envp_dup(envp, &tools);
 	tools_load(&tools);
 	pwd_search(&tools);
 	minishell_loop(&tools);
