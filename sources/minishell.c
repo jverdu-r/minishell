@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:15:26 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/08 15:33:42 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/08 16:49:04 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,11 @@ void	leaks(void)
 int	main(int argc, char *argv[])
 {
 	char	*input;
-//	int		loop;
 
 	atexit(leaks);
 	(void)argc;
 	(void)argv;
 	rl_on_new_line();
-//	loop = 1;
 	while (1)
 	{
 		signals_workout();
@@ -41,15 +39,8 @@ int	main(int argc, char *argv[])
 		add_history(input);
 		if (input == NULL)
 			return (exit_code());
-	//	loop = ft_strcmp(input, "EXIT");
-	/*	if (loop == 0)
-		{
-			clear_history();
-			free(input);
-		}*/
 		else
 		{
-			
 			input_filter(input);
 			//get_cmds(ft_split(input, ' '));
 			free (input);

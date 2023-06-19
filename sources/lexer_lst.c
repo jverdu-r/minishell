@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_lst.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 11:45:56 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/07 15:33:10 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/08 17:50:53 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_lexer	*l_new(char *word, t_token token)
 	return (new);
 }
 
-t_lexer *l_last(t_lexer *lst)
+t_lexer	*l_last(t_lexer *lst)
 {
 	t_lexer	*tmp;
 

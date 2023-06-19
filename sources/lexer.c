@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:43:37 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/01 16:54:07 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/08 16:50:07 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	get_cmds(char **input)
 	tk = 0;
 	while (input[i])
 	{
-		tk =token_parser(input[i]);
+		tk = token_parser(input[i]);
 		if (tk != 0)
 			lexer_addback(&lexer, lexer_new(NULL, tk));
 		else
