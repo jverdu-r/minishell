@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 12:14:37 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/17 13:30:50 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/19 18:02:06 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,15 @@ int	exit_code(void)
 
 int	minishell_loop(t_toolbox *tools)
 {
+	char	*input;
+
 	while (1)
 	{
 		signals_workout();
 		tools->args = readline("minishell>");
+		input = ft_strtrim(tools->args, " ");
+		free(tools->args);
+		tools->args = input;
 		if (!tools->args)
 			return (exit_code());
 		else if (ft_strcmp(tools->args, "") == 0)
@@ -39,7 +44,8 @@ int	minishell_loop(t_toolbox *tools)
 		else
 		{
 			add_history(tools->args);
-			printf("\n%s\n", tools->args);
+			if (!handle_quotes(tools->args))
+				printf("\n%s\n", tools->args);
 			free(tools->args);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 13:52:34 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/17 14:20:51 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:19:56 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	sp_cmds_show(t_sp_cmds *list) //only for testing
 			i = 0;
 			while (tmp->cmd[i])
 			{
-				printf("%s\n", tmp_>cmd[i]);
+				printf("%s\n", tmp->cmd[i]);
 				i++;
 			}
 		}

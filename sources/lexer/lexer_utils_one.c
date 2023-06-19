@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 14:21:42 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/17 14:28:12 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:50:05 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_lexer	*lexer_new(char	*str, t_token token)
 
 t_lexer	*lexer_last(t_lexer *list)
 {
-	t_lexer	tmp;
+	t_lexer	*tmp;
 
 	if (!list)
 		return (NULL);
@@ -43,7 +43,7 @@ void	lexer_delone(t_lexer **list)
 {
 	if (list && *list)
 	{
-		if (sp_cmds_length(*list) > 1)
+		if (lexer_length(*list) > 1)
 		{
 			list[0] = list[0]->next;
 			free(list[0]->prev);
@@ -52,14 +52,14 @@ void	lexer_delone(t_lexer **list)
 		else
 		{
 			free(list[0]);
-			lst[0] = NULL;
+			list[0] = NULL;
 		}
 	}
 }
 
 void	lexer_add(t_lexer **head, t_lexer *new)
 {
-	t_sp_cmds	*tmp;
+	t_lexer	*tmp;
 	
 	tmp = *head;
 	if (*head == NULL)
@@ -75,7 +75,7 @@ void	lexer_add(t_lexer **head, t_lexer *new)
 
 void	lexer_addback(t_lexer **head, t_lexer *new)
 {
-	t_sp_cmds	*tmp;
+	t_lexer	*tmp;
 
 	tmp = *head;
 	if (*head == NULL)

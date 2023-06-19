@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:07:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/17 14:34:11 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/19 17:59:00 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,15 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "libft/libft.h"
+
+typedef enum	s_token
+{
+	PIPE = 1,
+	LESS,
+	LESS_LESS,
+	GREAT,
+	GREAT_GREAT,
+}	t_token;
 
 typedef struct	s_lexer
 {
@@ -56,7 +65,7 @@ void	lexer_addback(t_lexer **head, t_lexer *new);
 void	lexer_add(t_lexer **head, t_lexer *new);
 void	lexer_delone(t_lexer **list);
 void	lexer_free(t_lexer *list);
-void	lexer_show(t_lexer *list) //free list only for testting
+void	lexer_show(t_lexer *list); //free list only for testting
 int		lexer_length(t_lexer *list);
 t_lexer	*lexer_new(char	*str, t_token token);
 t_lexer	*lexer_last(t_lexer *list);
@@ -81,5 +90,7 @@ int		pwd_search(t_toolbox *tools);
 
 //utility functions
 void	free_arr(char **arr);
+void	error_msg(char *msg);
+int		handle_quotes(char *input);
 
 #endif

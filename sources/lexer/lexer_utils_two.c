@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 14:28:22 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/17 14:36:16 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:51:17 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	lexer_free(t_lexer *list)
 
 void	lexer_show(t_lexer *list) //only for testing
 {
-	lexer_cmds	*tmp;
+	t_lexer	*tmp;
 
 	tmp = list;
 	printf("\n");
