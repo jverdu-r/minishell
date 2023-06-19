@@ -6,7 +6,11 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:34:22 by jverdu-r          #+#    #+#             */
+<<<<<<< HEAD:sources/input_split.c
 /*   Updated: 2023/06/08 17:52:09 by daparici         ###   ########.fr       */
+=======
+/*   Updated: 2023/06/14 16:05:03 by jverdu-r         ###   ########.fr       */
+>>>>>>> 2e6bdc2bff8ec99513594b2b36ef616cea68cdf7:sources/legacy/input_split.c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +60,7 @@ int	token_handler(t_lexer **lexer_list, char *input, int i)
 	return (1);
 }
 
-void	input_filter(char *ipt)
+t_lexer	*input_filter(char *ipt)
 {
 	int		ed_tk;
 	int		st_tk;
@@ -82,5 +86,5 @@ void	input_filter(char *ipt)
 	}
 	if (ed_tk != st_tk)
 		l_addback(&lex, l_new(ft_substr(ipt, st_tk, ed_tk - st_tk), 0));
-	show_lexer(lex);
+	return (lex);
 }

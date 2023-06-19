@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/08 14:52:14 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/08 15:35:35 by jverdu-r         ###   ########.fr       */
+/*   Created: 2022/01/19 18:34:15 by jverdu-r          #+#    #+#             */
+/*   Updated: 2022/02/08 17:06:27 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-static void	signal_int(int code)
+size_t	ft_strlcpy(char *dst, const char *src, size_t destsize)
 {
-	(void)code;
-	printf("minishell>");
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	size_t	len;
+	size_t	newlen;
 
-}
-void	signals_workout(void)
-{
-	signal(SIGINT, signal_int);
-	signal(SIGQUIT, SIG_IGN);
+	len = ft_strlen(src);
+	if (destsize == 0)
+		return (len);
+	if (len >= destsize)
+		newlen = destsize - 1;
+	else
+		newlen = len;
+	ft_memcpy(dst, src, newlen);
+	dst[newlen] = 0;
+	return (len);
 }

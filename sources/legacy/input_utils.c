@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_utils.c                                       :+:      :+:    :+:   */
+/*   input_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/01 15:06:25 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/08 15:20:02 by jverdu-r         ###   ########.fr       */
+/*   Created: 2023/06/12 10:45:20 by jverdu-r          #+#    #+#             */
+/*   Updated: 2023/06/13 15:43:49 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,23 +62,5 @@ void show_lexer(t_lexer	*lexer_list)
 			printf("\n%d\n", tmp->token);
 		tmp = tmp->next;
 	}
-	l_free(lexer_list);
-}
-
-
-int	parser_length(t_cmds *list)
-{
-	int		i;
-	t_cmds	*aux;
-
-	if (!list)
-		return (0);
-	aux = list;
-	i = 0;
-	while (aux)
-	{
-		aux = aux->next;
-		i++;
-	}
-	return (i);
+	//l_free(lexer_list);
 }

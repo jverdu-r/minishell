@@ -6,7 +6,11 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:43:37 by jverdu-r          #+#    #+#             */
+<<<<<<< HEAD:sources/lexer.c
 /*   Updated: 2023/06/08 16:50:07 by daparici         ###   ########.fr       */
+=======
+/*   Updated: 2023/06/13 15:37:19 by jverdu-r         ###   ########.fr       */
+>>>>>>> 2e6bdc2bff8ec99513594b2b36ef616cea68cdf7:sources/legacy/lexer.c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +32,14 @@ int	token_parser(char	*input)
 		return (0);
 }
 
-void	get_cmds(char **input)
+void	show_split(char **split)
 {
-	int		i;
-	int		tk;
-	t_lexer	*lexer;
-	t_lexer	*tmp;
+	int	x;
 
-	lexer = NULL;
-	i = 0;
-	tk = 0;
-	while (input[i])
+	x = 0;
+	while (split[x])
 	{
+<<<<<<< HEAD:sources/lexer.c
 		tk = token_parser(input[i]);
 		if (tk != 0)
 			lexer_addback(&lexer, lexer_new(NULL, tk));
@@ -47,26 +47,34 @@ void	get_cmds(char **input)
 			lexer_addback(&lexer, lexer_new(input[i], 0));
 		tk = 0;
 		i++;
+=======
+		printf("%s ", split[x]);
+		x++;
+>>>>>>> 2e6bdc2bff8ec99513594b2b36ef616cea68cdf7:sources/legacy/lexer.c
 	}
-	while (lexer->prev)
-		lexer = lexer->prev;
-	tmp = lexer;
-	while (tmp)
+	printf("\n");
+}
+void	get_cmds(t_lexer *lex)
+{
+	t_cmds	*cmds;
+
+	cmds = NULL;
+	show_lexer(lex);
+	while (lex->next)
 	{
-		if (tmp->word)
-			printf("%s ", tmp->word);
-		else
-			printf("%d ", tmp->token);
-		printf("index: %d\n", tmp->index);
-		tmp = tmp->next;
+		if (lex->word)
+		{
+			parser_addback(&cmds, parser_new(ft_split(lex->word, ' '), 0));
+		}
+		else if (lex->token)
+			parser_addback(&cmds, parser_new(NULL, lex->token));
+		lex = lex->next;
 	}
-	while (lexer->next)
-	{
-		tmp = lexer->next;
-		lexer_delone(&lexer);
-		lexer = tmp;
-	}
-//	else
-//		printf("ERROR could not reserve lexer's memory");
-	free(input);
+	if (lex->word)
+		parser_addback(&cmds, parser_new(ft_split(lex->word, ' '), 0));
+	else if (lex->token)
+		parser_addback(&cmds, parser_new(NULL, lex->token));
+	show_parser(cmds);
+	l_free(lex);
+	//system("leaks -q minishell");
 }

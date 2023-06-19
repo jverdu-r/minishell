@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_lst.c                                        :+:      :+:    :+:   */
+/*   lexer_utils_one.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/25 11:45:56 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/08 17:50:53 by daparici         ###   ########.fr       */
+/*   Created: 2023/06/17 14:21:42 by jverdu-r          #+#    #+#             */
+/*   Updated: 2023/06/19 16:50:05 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-t_lexer	*l_new(char *word, t_token token)
+t_lexer	*lexer_new(char	*str, t_token token)
 {
 	t_lexer	*new;
 
 	new = malloc(sizeof(t_lexer));
 	if (!new)
 		return (NULL);
-	new->word = word;
+	new->str = str;
 	new->token = token;
 	new->index = 0;
 	new->next = NULL;
@@ -27,54 +27,53 @@ t_lexer	*l_new(char *word, t_token token)
 	return (new);
 }
 
-t_lexer	*l_last(t_lexer *lst)
+t_lexer	*lexer_last(t_lexer *list)
 {
 	t_lexer	*tmp;
 
-	if (!lst)
+	if (!list)
 		return (NULL);
-	tmp = lst;
-	while (tmp->next != NULL)
+	tmp = list;
+	while (tmp->next)
 		tmp = tmp->next;
 	return (tmp);
 }
 
-void	l_delone(t_lexer **lst)
+void	lexer_delone(t_lexer **list)
 {
-	if (lst && *lst)
+	if (list && *list)
 	{
-		if (l_length(*lst) > 1)
+		if (lexer_length(*list) > 1)
 		{
-			lst[0] = lst[0]->next;
-			free(lst[0]->prev);
-			lst[0]->prev = NULL;
+			list[0] = list[0]->next;
+			free(list[0]->prev);
+			list[0]->prev = NULL;
 		}
 		else
 		{
-			free(lst[0]);
-			lst[0] = NULL;
+			free(list[0]);
+			list[0] = NULL;
 		}
 	}
 }
 
-void	l_add(t_lexer **head, t_lexer *new)
+void	lexer_add(t_lexer **head, t_lexer *new)
 {
 	t_lexer	*tmp;
-
+	
 	tmp = *head;
 	if (*head == NULL)
 		*head = new;
 	else
 	{
 		new->next = tmp;
-		tmp->index = new->index + 1;
 		tmp->prev = new;
 		tmp = new;
 		*head = tmp;
 	}
 }
 
-void	l_addback(t_lexer **head, t_lexer *new)
+void	lexer_addback(t_lexer **head, t_lexer *new)
 {
 	t_lexer	*tmp;
 
@@ -89,7 +88,6 @@ void	l_addback(t_lexer **head, t_lexer *new)
 			{
 				tmp->next = new;
 				new->prev = tmp;
-				new->index = tmp->index + 1;
 				tmp = new;
 			}
 			tmp = tmp->next;

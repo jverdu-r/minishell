@@ -1,83 +1,79 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_lst.c                                       :+:      :+:    :+:   */
+/*   sp_cmds_utils_one.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/01 14:52:32 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/01 15:24:32 by jverdu-r         ###   ########.fr       */
+/*   Created: 2023/06/17 13:31:45 by jverdu-r          #+#    #+#             */
+/*   Updated: 2023/06/19 16:19:00 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-t_cmds	*parser_new(t_lexer *lexer)
+t_sp_cmds	*sp_cmds_new(char	**cmd)
 {
-	t_cmds	*new;
+	t_sp_cmds	*new;
 
-	new = malloc(sizeof(t_cmds));
+	new = malloc(sizeof(t_sp_cmds));
 	if (!new)
 		return (NULL);
-	new->cmd = lexer_join(&lexer);
-	new->redirs = lexer_redirs(&lexer);
-	new->file_name	= lexer_file(&lexer);
-	new->redirections = lex_redirect(lexer);
+	new->cmd = cmd;
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);
 }
 
-t_cmds *parser_last(t_cmds *lst)
+t_sp_cmds	*sp_cmds_last(t_sp_cmds *list)
 {
-	t_cmds	*tmp;
+	t_sp_cmds	*tmp;
 
-	if (!lst)
+	if (!list)
 		return (NULL);
-	tmp = lst;
-	while (tmp->next != NULL)
+	tmp = list;
+	while (tmp->next)
 		tmp = tmp->next;
 	return (tmp);
 }
 
-void	parser_delone(t_cmds **lst)
+void	sp_cmds_delone(t_sp_cmds **list)
 {
-	if (lst && *lst)
+	if (list && *list)
 	{
-		if (parser_length(*lst) > 1)
+		if (sp_cmds_length(*list) > 1)
 		{
-			lst[0] = lst[0]->next;
-			free(lst[0]->prev);
-			lst[0]->prev = NULL;
+			list[0] = list[0]->next;
+			free(list[0]->prev);
+			list[0]->prev = NULL;
 		}
 		else
 		{
-			free(lst[0]);
-			lst[0] = NULL;
+			free(list[0]);
+			list[0] = NULL;
 		}
 	}
 }
 
-void	parser_add(t_cmds **head, t_cmds *new)
+void	sp_cmds_add(t_sp_cmds **head, t_sp_cmds *new)
 {
-	t_cmds	*tmp;
-
+	t_sp_cmds	*tmp;
+	
 	tmp = *head;
 	if (*head == NULL)
 		*head = new;
 	else
 	{
 		new->next = tmp;
-		tmp->index = new->index + 1;
 		tmp->prev = new;
 		tmp = new;
 		*head = tmp;
 	}
 }
 
-void	parser_addback(t_cmds **head, t_cmds *new)
+void	sp_cmds_addback(t_sp_cmds **head, t_sp_cmds *new)
 {
-	t_cmds	*tmp;
+	t_sp_cmds	*tmp;
 
 	tmp = *head;
 	if (*head == NULL)
@@ -90,7 +86,6 @@ void	parser_addback(t_cmds **head, t_cmds *new)
 			{
 				tmp->next = new;
 				new->prev = tmp;
-				new->index = tmp->index + 1;
 				tmp = new;
 			}
 			tmp = tmp->next;
