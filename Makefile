@@ -6,7 +6,7 @@
 #    By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/24 15:20:41 by jverdu-r          #+#    #+#              #
-#    Updated: 2023/06/17 14:36:09 by jverdu-r         ###   ########.fr        #
+#    Updated: 2023/06/20 16:57:46 by jverdu-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,8 @@ SRCS	=	sources/main.c \
 			sources/utils/sp_cmds_utils_two.c \
 			sources/lexer/lexer_utils_one.c \
 			sources/lexer/lexer_utils_two.c \
+			sources/lexer/token_handler.c \
+			sources/lexer/token_reader.c
 
 OBJS	=	$(SRCS:%.c=%.o)
 

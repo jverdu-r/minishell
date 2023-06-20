@@ -6,11 +6,20 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 12:14:37 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/19 19:11:27 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/20 19:23:47 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	tools_reload(t_toolbox *tools)
+{
+	lexer_free(tools->lexer_list);
+	free(tools->args);
+	tools->args = NULL;
+	tools->sp_cmds = NULL;
+	tools->lexer_list = NULL;
+}
 
 int	tools_load(t_toolbox *tools)
 {
@@ -44,9 +53,10 @@ int	minishell_loop(t_toolbox *tools)
 		else
 		{
 			add_history(tools->args);
-			/*if (!handle_quotes(tools->args))
-				handle_tokens(tools->args);*/
-			free(tools->args);
+			if (!handle_quotes(tools->args))
+				token_reader(tools);
+			lexer_show(tools->lexer_list); // testing lexer 
+			tools_reload(tools);
 		}
 	}
 	return (0);

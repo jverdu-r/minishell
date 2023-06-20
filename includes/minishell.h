@@ -6,11 +6,8 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:07:55 by jverdu-r          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/06/19 19:42:20 by jverdu-r         ###   ########.fr       */
-=======
+/*   Updated: 2023/06/20 18:12:46 by jverdu-r         ###   ########.fr       */
 /*   Updated: 2023/06/19 19:53:37 by daparici         ###   ########.fr       */
->>>>>>> 36aa9fb6edf5fffe18dd470af13bdfadc06e7616
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +47,18 @@ typedef struct	s_sp_cmds
 	struct s_sp_cmds	*prev;
 }	t_sp_cmds;
 
-typedef struct s_envp
+typedef struct s_env
 {
 	char	*var;
 	void	*next;
-}	t_envp;
+}	t_env;
 
 typedef struct s_toolbox
 {
 	char		*args;
-	char		**envp;
-	t_envp		envp;
-	t_envp		sort_envp;
+	char		**env;
+	t_env		envp;
+	t_env		sort_envp;
 	char		*env_rute;
 	char		*pwd;
 	char		*old_pwd;
@@ -94,16 +91,17 @@ t_sp_cmds	*sp_cmds_new(char **cmd);
 t_sp_cmds	*sp_cmds_last(t_sp_cmds *list);
 
 //parse functions
-int	token_reader(t_toolbox *tools);
-int	token_handler(char *args, int i, t_lexer *list);
+int		token_reader(t_toolbox *tools);
+int		token_handler(char *args, int i, t_lexer *list);
+t_token	check_token(char *tk, int i);
 
 //loop functions
-int	minishell_loop(t_toolbox *tools);
-int	tools_load(t_toolbox *tools);
+int		minishell_loop(t_toolbox *tools);
+int		tools_load(t_toolbox *tools);
 
 //enviroment functions
 char	**envp_dup(char **envp, t_toolbox *tools);
-char	 **st_envp(t_toolbox *tools, char **envp);
+char	 **st_envp(t_toolbox *tools, char **env);
 int		pwd_search(t_toolbox *tools);
 
 //utility functions

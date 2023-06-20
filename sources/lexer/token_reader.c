@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 18:46:24 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/19 19:51:10 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/20 19:02:35 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,77 @@ int	is_white_space(char c)
 	return (0);
 }
 
-check_token(char tk)
+t_token	check_token(char *tk, int i)
 {
-	if (tk == '|' || '<' || '>')
-		return (tk);
-	return (NULL);
+	if (tk[i] == '|')
+		return (PIPE);
+	if (tk[i] == '<')
+	{
+		if (tk[i + 1] == '<')
+			return (LESS_LESS);
+		else
+			return (LESS);
+	}
+	if (tk[i] == '>')
+	{
+		if (tk[i + 1] == '>')
+			return (GREAT_GREAT);
+		else
+			return (GREAT);
+	}
+	return (0);
+}
+
+int	read_words(char *args, int i, t_lexer **list)
+{
+	int	j;
+	int	qt;
+
+	j = 0;
+	(void)list;
+	while (args[i + j])
+	{
+		if (args[i + j] == '\'' || args[i + j] == '\"')
+		{
+			qt = i + j;
+			j++;
+			while (args[i + j] != args[qt])
+				j++;
+		}
+		if (is_white_space(args[i + j]) || check_token(args, i + j))
+			break;
+		else
+			j++;
+	}
+	lexer_addback(list, lexer_new(ft_substr(args, i, j), 0));
+	if (!list)
+		return (-1);
+	return (j);
 }
 
 int	token_reader(t_toolbox *tools)
 {
-	int	tk;
-	int	i;
+	t_token	tk;
+	int		i;
+	int		j;
 
 	i = 0;
 	while (tools->args[i])
 	{
+		j = 0;
 		if (is_white_space(tools->args[i]))
 				i++;
-		if (check_token(tools->args[i]))
-			j = handle_token(tools->args, i, &tools->lexer_list);
-		i++;
+		if (check_token(tools->args, i) > 0)
+		{
+			tk = token_handler(tools->args, i, tools->lexer_list);
+			if (tk == LESS_LESS || tk == GREAT_GREAT)
+				j += 2;
+			else
+				j++;
+		}
+		else
+			j += read_words(tools->args, i, &tools->lexer_list);
+		i += j;
 	}
 	return (1);
 }
