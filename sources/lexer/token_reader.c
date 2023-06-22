@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 18:46:24 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/20 19:02:35 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:21:08 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ int	token_reader(t_toolbox *tools)
 	{
 		j = 0;
 		if (is_white_space(tools->args[i]))
-				i++;
-		if (check_token(tools->args, i) > 0)
+			i++;
+		if (check_token(tools->args, i))
 		{
-			tk = token_handler(tools->args, i, tools->lexer_list);
+			tk = token_handler(tools, i);
 			if (tk == LESS_LESS || tk == GREAT_GREAT)
 				j += 2;
 			else

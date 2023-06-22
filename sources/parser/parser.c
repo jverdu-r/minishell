@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_handler.c                                    :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/19 19:40:51 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/22 16:58:42 by jverdu-r         ###   ########.fr       */
+/*   Created: 2023/06/21 16:35:55 by jverdu-r          #+#    #+#             */
+/*   Updated: 2023/06/22 17:52:07 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../includes/minishell.h"
 
-int	token_handler(t_toolbox *tools, int i)
+int	parser(t_toolbox *tools)
 {
-	t_token tk;
+	t_sp_cmds	*node;
+	t_p_toolbox	p_tools;
 
-	tk = check_token(tools->args, i);
-	if (tk == LESS_LESS || tk == GREAT_GREAT)
-	{
-		lexer_addback(&tools->lexer_list, lexer_new(NULL, tk));
-		return (2);
-	}
-	if (tk == PIPE || tk == LESS || tk == GREAT)
-	{
-		lexer_addback(&tools->lexer_list, lexer_new("", tk));
-		return (1);
-	}
+	(void)node;
+	(void)p_tools;
+	if (tools->lexer_list->token == PIPE)
+		return (error_token(tools->lexer_list->token));
+	//lexer_show(tools->lexer_list); //for testing purposes
 	return (0);
 }
-
-

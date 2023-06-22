@@ -6,16 +6,11 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 12:58:17 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/20 18:09:09 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/22 17:34:21 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	error_msg(char *msg)
-{
-	printf("ERROR: %s", msg);
-}
 
 int	handle_quotes(char *input)
 {
@@ -39,8 +34,7 @@ int	handle_quotes(char *input)
 	}
 	if (qt != -1)
 	{
-		error_msg("unclosed quotation mark\n");
-		return (1);
+		return (error_msg("unclosed quotation mark\n"));
 	}
 	return (0);
 }

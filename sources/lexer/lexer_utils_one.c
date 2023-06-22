@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 14:21:42 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/20 19:03:52 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/22 15:43:54 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,10 @@ void	lexer_addback(t_lexer **head, t_lexer *new)
 		*head = new;
 	else
 	{
-		while (tmp)
-		{
-			if (!tmp->next)
-			{
-				tmp->next = new;
-				new->prev = tmp;
-				tmp = new;
-			}
+		while (tmp->next)
 			tmp = tmp->next;
-		}
+		tmp->next = new;
+		new->prev = tmp;
+		//tmp = new;
 	}
 }

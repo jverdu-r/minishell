@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 12:14:37 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/20 19:23:47 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/22 17:29:47 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,10 @@ int	minishell_loop(t_toolbox *tools)
 		{
 			add_history(tools->args);
 			if (!handle_quotes(tools->args))
+			{
 				token_reader(tools);
-			lexer_show(tools->lexer_list); // testing lexer 
+				parser(tools);
+			}
 			tools_reload(tools);
 		}
 	}

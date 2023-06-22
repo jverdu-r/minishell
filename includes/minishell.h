@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:07:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/20 18:12:46 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/22 17:46:12 by jverdu-r         ###   ########.fr       */
 /*   Updated: 2023/06/19 19:53:37 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -53,7 +53,7 @@ typedef struct s_env
 	void	*next;
 }	t_env;
 
-typedef struct s_toolbox
+typedef struct	s_toolbox
 {
 	char		*args;
 	char		**env;
@@ -65,6 +65,14 @@ typedef struct s_toolbox
 	t_sp_cmds	*sp_cmds;
 	t_lexer		*lexer_list;
 }	t_toolbox;
+
+typedef struct	s_p_toolbox
+{
+	t_lexer		*lexer_list;
+	t_lexer		*redirections;
+	int			num_redirections;
+	t_toolbox	*tools;
+}	t_p_toolbox;
 
 //signal functions
 void	signals_workout(void);
@@ -92,12 +100,14 @@ t_sp_cmds	*sp_cmds_last(t_sp_cmds *list);
 
 //parse functions
 int		token_reader(t_toolbox *tools);
-int		token_handler(char *args, int i, t_lexer *list);
+int		token_handler(t_toolbox *tools, int i);
+int		parser(t_toolbox *tools);
 t_token	check_token(char *tk, int i);
 
 //loop functions
 int		minishell_loop(t_toolbox *tools);
 int		tools_load(t_toolbox *tools);
+int		tools_reload(t_toolbox *tools);
 
 //enviroment functions
 char	**envp_dup(char **envp, t_toolbox *tools);
@@ -106,7 +116,9 @@ int		pwd_search(t_toolbox *tools);
 
 //utility functions
 void	free_arr(char **arr);
-void	error_msg(char *msg);
 int		handle_quotes(char *input);
 
+//error functions
+int		error_msg(char *msg);
+int		error_token(t_token token);
 #endif
