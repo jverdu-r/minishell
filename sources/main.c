@@ -6,8 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 10:28:15 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/22 16:50:21 by jverdu-r         ###   ########.fr       */
-/*   Updated: 2023/06/19 19:28:44 by daparici         ###   ########.fr       */
+/*   Updated: 2023/06/22 20:26:24 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +27,10 @@ int	main(int argc, char **argv, char **envp)
 		printf("Minishell must be executed wihtout arguments");
 		exit(0);
 	}
-	tools.env = envp_dup(envp, &tools);
+	//tools.env = (t_env *)malloc(sizeof(t_env));
+	envp_dup(envp, &tools);
 	tools_load(&tools);
 	pwd_search(&tools);
-	minishell_loop(&tools);
+	//minishell_loop(&tools);
 	return (0);
 }

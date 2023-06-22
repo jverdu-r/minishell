@@ -6,8 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:07:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/22 17:46:12 by jverdu-r         ###   ########.fr       */
-/*   Updated: 2023/06/19 19:53:37 by daparici         ###   ########.fr       */
+/*   Updated: 2023/06/22 20:27:33 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +55,8 @@ typedef struct s_env
 typedef struct	s_toolbox
 {
 	char		*args;
-	char		**env;
-	t_env		envp;
+	char		**envp;
+	t_env		env;
 	t_env		sort_envp;
 	char		*env_rute;
 	char		*pwd;
@@ -110,9 +109,13 @@ int		tools_load(t_toolbox *tools);
 int		tools_reload(t_toolbox *tools);
 
 //enviroment functions
-char	**envp_dup(char **envp, t_toolbox *tools);
-char	 **st_envp(t_toolbox *tools, char **env);
+void	envp_dup(char **envp, t_toolbox *tools);
+char	**st_envp(t_toolbox *tools, char **env);
 int		pwd_search(t_toolbox *tools);
+t_env	*env_lstnew_m(char *content);
+void	env_lstadd_back(t_env **lst, t_env *new);
+t_env	*env_lstlast(t_env *lst);
+void	ft_lstlast_p_2(t_env *lst);
 
 //utility functions
 void	free_arr(char **arr);

@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 12:33:17 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/20 16:55:48 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/22 20:21:58 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,32 +44,75 @@ int	pwd_search(t_toolbox *tools)
 	sort_env = ft_calloc(sizeof(char *), i + 1);
 	
 }*/
-
-char	**envp_dup(char	**envp, t_toolbox *tools)
+t_env	*env_lstlast(t_env *lst)
 {
-	char	**tmp;
-	int		i;
+	t_env	*temp;
 
-	(void)tools;
-	i = 0;
-	while (envp[i])
-		i++;
-	tmp = ft_calloc(sizeof(char *), i + 1);
-	if (!tmp)
+	if (!lst)
 		return (NULL);
+	temp = lst;
+	while (temp->next != NULL)
+		temp = temp->next;
+	return (temp);
+}
+
+void	env_lstadd_back_m(t_env **lst, t_env *new)
+{
+	t_env	*tmp;
+
+	if (lst)
+	{
+		if (*lst == NULL)
+			*lst = new;
+		else
+		{
+			tmp = env_lstlast(*(lst));
+			tmp->next = new;
+		}
+	}
+}
+
+t_env	*env_lstnew_m(char *content)
+{
+	t_env	*new;
+
+	new = malloc(sizeof(t_env));
+	if (new == NULL)
+		return (NULL);
+	new->var = ft_strdup(content);
+	if (!new->var)
+	{
+		free_arr(new->var);
+		return (NULL);
+	}
+	new->next = NULL;
+	return (new);
+}
+
+void	ft_lstlast_p_2(t_env *lst)
+{
+	while (lst)
+	{
+		printf("%s\n", lst->var);
+		lst = lst->next;
+	}
+}
+
+void	envp_dup(char	**envp, t_toolbox *tools)
+{
+	int		i;
+	t_env	*new;
+	t_env	*start;
+
+	start = tools->env;
 	i = 0;
 	while (envp[i])
 	{
-		tmp[i] = ft_strdup(envp[i]);
-		if (!tmp[i])
-		{
-			free_arr(tmp);
-			return (NULL);
-		}
+		new = ft_lstnew_m(envp[i]);
+		ft_lstadd_back(&tools->env, new);
 		i++;
 	}
+	tools->env = start;
+	ft_lstlast_p_2(tools->env);
 	//tools->sort_env = st_envp(tools, envp);
-	return (tmp);
 }
-
-
