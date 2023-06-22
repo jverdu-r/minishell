@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:07:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/22 17:46:12 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/22 20:00:39 by jverdu-r         ###   ########.fr       */
 /*   Updated: 2023/06/19 19:53:37 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -107,7 +107,7 @@ t_token	check_token(char *tk, int i);
 //loop functions
 int		minishell_loop(t_toolbox *tools);
 int		tools_load(t_toolbox *tools);
-int		tools_reload(t_toolbox *tools);
+void	tools_reload(t_toolbox *tools);
 
 //enviroment functions
 char	**envp_dup(char **envp, t_toolbox *tools);
