@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:35:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/22 20:21:27 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/06/27 10:11:15 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ char	**init_cmd(t_p_toolbox *p_tools)
 		}
 		tmp = tmp->next;
 	}
+	cmds[i] = 0;
 	return (cmds);
 }
 
@@ -72,9 +73,11 @@ int	parser(t_toolbox *tools)
 	if (tools->lexer_list->token == PIPE)
 		return (error_token(tools->lexer_list->token));
 	p_tools = init_p_tools(tools);
+	node = NULL;
 	sp_cmds_addback(&node, sp_cmds_new(init_cmd(&p_tools)));
 	if (!node)
 		return (error_msg("syntax error near unexpected token 'newline'"));
-	//sp_cmds_show(node); //for testing purposes
+	sp_cmds_show(node); //for testing purposes
+	//lexer_free(p_tools.lexer_list);
 	return (0);
 }
