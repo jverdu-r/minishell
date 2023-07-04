@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:07:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/22 20:00:39 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/04 09:46:25 by jverdu-r         ###   ########.fr       */
 /*   Updated: 2023/06/19 19:53:37 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -43,6 +43,8 @@ typedef struct	s_lexer
 typedef struct	s_sp_cmds
 {
 	char				**cmd;
+	char				*hd_file_name;
+	t_lexer				*redirection;
 	struct s_sp_cmds	*next;
 	struct s_sp_cmds	*prev;
 }	t_sp_cmds;
@@ -99,10 +101,12 @@ t_sp_cmds	*sp_cmds_new(char **cmd);
 t_sp_cmds	*sp_cmds_last(t_sp_cmds *list);
 
 //parse functions
-int		token_reader(t_toolbox *tools);
-int		token_handler(t_toolbox *tools, int i);
-int		parser(t_toolbox *tools);
-t_token	check_token(char *tk, int i);
+int			token_reader(t_toolbox *tools);
+int			token_handler(t_toolbox *tools, int i);
+int			parser(t_toolbox *tools);
+void		lex_list_free(t_lexer *list);
+void		handle_parse_redirections(t_lexer *list, t_sp_cmds *node);
+t_token		check_token(char *tk, int i);
 
 //loop functions
 int		minishell_loop(t_toolbox *tools);

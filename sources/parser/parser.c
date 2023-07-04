@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:35:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/03 11:12:11 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/04 09:51:17 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,32 +39,6 @@ int	arg_count(t_lexer *list)
 	return (i);
 }
 
-/*char	**init_cmd(t_p_toolbox *p_tools) //reescribir para adaptar a cmd_extract
-{
-	char	**cmds;
-	int		cmd_size;
-	int		i;
-	t_lexer	*tmp;
-
-	cmd_size = arg_count(p_tools->lexer_list);
-	cmds = ft_calloc(cmd_size + 1, sizeof(char *));
-	if (!cmds)
-		return (NULL);
-	tmp = p_tools->lexer_list;
-	i = 0;
-	while (tmp)
-	{
-		if (tmp->token == 0)
-		{
-			cmds[i] = ft_strdup(tmp->str);
-			i++;
-		}
-		tmp = tmp->next;
-	}
-	cmds[i] = 0;
-	return (cmds);
-}*/
-
 char	**init_cmd(int count, t_lexer *list)
 {
 	char	**cmds;
@@ -92,33 +66,37 @@ t_sp_cmds	*cmd_extract(t_p_toolbox *p_tools, t_sp_cmds *node)
 {
 	t_lexer		*lex_list;
 	int			count;
+	int			trig;
 
 	lex_list = NULL;
+	trig = 0;
 	while (p_tools->lexer_list)
 	{
 		if (p_tools->lexer_list->token != PIPE)
-			lexer_addback(&lex_list, lexer_new(p_tools->lexer_list->str,
-					p_tools->lexer_list->token));
+		{
+			if (p_tools->lexer_list->token > 0 || trig == 1)
+			{
+				printf("\n--entering redirections--\n");
+				handle_parse_redirections(lex_list, node);
+				trig = 1;
+			}
+			else if (trig == 0)
+				lexer_addback(&lex_list, lexer_new(p_tools->lexer_list->str,
+							p_tools->lexer_list->token));
+		}
 		if (p_tools->lexer_list->token == PIPE)
 		{
 			count = arg_count(lex_list);
-			printf("\ncount: %d\n", count);
 			sp_cmds_addback(&node, sp_cmds_new(init_cmd(count, lex_list)));
 			while (lex_list)
 				lex_list = lex_list->next;
+			trig = 0;
 		}
 		p_tools->lexer_list = p_tools->lexer_list->next;
 	}
 	count = arg_count(lex_list);
 	sp_cmds_addback(&node, sp_cmds_new(init_cmd(count, lex_list)));
-	while (lex_list->prev)
-		lex_list = lex_list->prev;
-	while (lex_list->next)
-	{
-		lex_list = lex_list->next;
-		free(lex_list->prev);
-	}
-	free(lex_list);
+	lex_list_free(lex_list);
 	return (node);
 }
 
@@ -132,9 +110,8 @@ int	parser(t_toolbox *tools)
 	node = NULL;
 	p_tools = init_p_tools(tools);
 	node = cmd_extract(&p_tools, node);
-	sp_cmds_show(node); //for testing purposes
-	//sp_cmds_addback(&node, sp_cmds_new(init_cmd(&p_tools)));
 	if (!node)
 		return (error_msg("syntax error near unexpected token 'newline'\n"));
+	sp_cmds_show(node); //for testing purposes
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 13:52:34 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/03 09:56:45 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/04 09:49:13 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ void	sp_cmds_show(t_sp_cmds *list) //only for testing
 				i++;
 			}
 		}
+		printf("\nhd_file_name: %s\n", list->hd_file_name);
+		printf("\nredirections:\n");
+		lexer_show(list->redirection);
 		tmp = tmp->next;
 	}
 	sp_cmds_free(list);
