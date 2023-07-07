@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:35:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/04 09:51:17 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/07 10:41:44 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,18 +74,13 @@ t_sp_cmds	*cmd_extract(t_p_toolbox *p_tools, t_sp_cmds *node)
 	{
 		if (p_tools->lexer_list->token != PIPE)
 		{
-			if (p_tools->lexer_list->token > 0 || trig == 1)
-			{
-				printf("\n--entering redirections--\n");
-				handle_parse_redirections(lex_list, node);
-				trig = 1;
-			}
-			else if (trig == 0)
-				lexer_addback(&lex_list, lexer_new(p_tools->lexer_list->str,
-							p_tools->lexer_list->token));
+			lexer_addback(&lex_list, lexer_new(p_tools->lexer_list->str,
+						p_tools->lexer_list->token));
 		}
 		if (p_tools->lexer_list->token == PIPE)
 		{
+			printf("\n--entering redirections--\n");
+			handle_parse_redirections(lex_list, node);
 			count = arg_count(lex_list);
 			sp_cmds_addback(&node, sp_cmds_new(init_cmd(count, lex_list)));
 			while (lex_list)
@@ -94,6 +89,8 @@ t_sp_cmds	*cmd_extract(t_p_toolbox *p_tools, t_sp_cmds *node)
 		}
 		p_tools->lexer_list = p_tools->lexer_list->next;
 	}
+	printf("\n--entering redirections out while--\n");
+	handle_parse_redirections(lex_list, node);
 	count = arg_count(lex_list);
 	sp_cmds_addback(&node, sp_cmds_new(init_cmd(count, lex_list)));
 	lex_list_free(lex_list);
