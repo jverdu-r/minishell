@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:07:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/04 09:46:25 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/11 09:01:41 by jverdu-r         ###   ########.fr       */
 /*   Updated: 2023/06/19 19:53:37 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -105,7 +105,7 @@ int			token_reader(t_toolbox *tools);
 int			token_handler(t_toolbox *tools, int i);
 int			parser(t_toolbox *tools);
 void		lex_list_free(t_lexer *list);
-void		handle_parse_redirections(t_lexer *list, t_sp_cmds *node);
+t_sp_cmds	*handle_parse_redirections(t_lexer *list);
 t_token		check_token(char *tk, int i);
 
 //loop functions

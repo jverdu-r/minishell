@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 08:11:35 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/07 09:52:02 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/11 09:36:16 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,38 +44,32 @@ int	file_checker(char	*str, char c)
 	return (0);
 }
 
-void	handle_parse_redirections(t_lexer *list, t_sp_cmds *node)
+t_sp_cmds	*handle_parse_redirections(t_lexer *list)
 {
-	t_lexer	*redir;
+	t_lexer		*redir;
+	t_sp_cmds	*node;
 
 	redir = NULL;
-	(void)node;
+	node = ft_calloc(1, sizeof(t_sp_cmds));
+	if (!node)
+		return (NULL);
+	while (list->prev)
+		list = list->prev;
 	while (list->token != 0 && list)
 		list = list->next;
 	while (list)
 	{
 		if (list->token > 0)
-		{
-			printf("\n--list->token: %d--\n", list->token);
 			lexer_addback(&redir, lexer_new(NULL, list->token));
-		}
 		else
 		{
-			printf("\n--list->str: %s--\n", list->str);
 			if (file_checker(list->str, '.') == 1)
-			{
-				printf("\n--asingning hd_file_name--\n");
-				//node->hd_file_name = list->str;
-				//printf("\n--node->hd_file_name: %s--\n", node->hd_file_name);
-			}
+				node->hd_file_name = list->str;
 			lexer_addback(&redir, lexer_new(list->str, 0));
 		}
 		list = list->next;
 	}
-	printf("\n-- redir list --\n");
-	lexer_show(redir);
-	//printf("\n--node->hd_file_name: %s--\n", node->hd_file_name);
-	//node->redirection = redir;
-	//lexer_show(node->redirection);
+	node->redirection = redir;
+	return (node);
 }
 
