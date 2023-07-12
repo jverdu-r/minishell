@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:35:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/11 10:18:38 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/12 11:19:17 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,85 +23,88 @@ t_p_toolbox	init_p_tools(t_toolbox *tools)
 	return (p_tools);
 }
 
-int	arg_count(t_lexer *list)
+char	**cmd_get(t_lexer *list)
 {
-	//t_lexer	*tmp;
+	char	**cmd;
 	int		i;
+	int		j;
+	t_lexer	*aux;
 
-	//tmp = list;
 	i = 0;
+	aux = list;
+	while (aux)
+	{
+		i++;
+		aux = aux->next;
+	}
+	cmd = ft_calloc(i + 1, sizeof(char *));
+	if (!cmd)
+		return (NULL);
+	j = 0;
+	while (j < i)
+	{
+		if (list->str)
+		{
+			cmd[j] = ft_strdup(list->str);
+			j++;
+		}
+		list = list->next;
+	}
+	cmd[j] = NULL;
+	printf("\nexit cmd_get\n");
+	return (cmd);
+}
+
+t_lexer	*get_redir(t_lexer *list)
+{
+	t_lexer *aux;
+
+	printf("\nentering get_redir\n");
+	aux = NULL;
+	while (list->token == 0)
+		list = list->next;
+	if (list != NULL)
+	{
+		while (list != NULL)
+		{
+			if (list->token)
+				lexer_addback(&aux, lexer_new(NULL, list->token));
+			if (list->str)
+				lexer_addback(&aux, lexer_new(ft_strdup(list->str), 0));
+			list = list->next;
+		}
+	}
+	printf("\nexit get_redir\n");
+	return (aux);
+}
+
+t_sp_cmds	*cmd_extract(t_lexer *list, t_sp_cmds *node)
+{
+	t_lexer	*aux;
+	t_sp_cmds *aux_node;
+
+	printf("\nentering cmd_extract\n");
+	aux = NULL;
+	aux_node = ft_calloc(1, sizeof(t_sp_cmds));
+	if (!aux_node)
+		return (NULL);
 	while (list)
 	{
 		if (list->token == 0)
-			i++;
+		{
+			lexer_addback(&aux, lexer_new(ft_strdup(list->str), 0));
+		}
+		if (list->token > 0 && list->token != PIPE)
+		{
+			aux_node->cmd = cmd_get(aux);
+			if (file_checker(list->next->str, '.'))
+				aux_node->hd_file_name = ft_strdup(list->next->str);
+			aux_node->redirection = get_redir(list);
+			sp_cmds_addback(&node, aux_node);
+		}
 		list = list->next;
 	}
-	return (i);
-}
-
-char	**init_cmd(int count, t_lexer *list)
-{
-	char	**cmds;
-	int		i;
-	t_lexer	*tmp;
-
-	cmds = ft_calloc(count + 1, sizeof(char *));
-	if (!cmds)
-		return (NULL);
-	while (list->prev)
-		list = list->prev;
-	if (cmds)
-	{
-		i = 0;
-		tmp = list;
-		while (tmp)
-		{
-			if (tmp->str)
-				cmds[i] = ft_strdup(tmp->str);
-			i++;
-			tmp = tmp->next;
-		}
-		cmds[i] = 0;
-	}
-	return (cmds);
-}
-
-t_sp_cmds	*cmd_extract(t_p_toolbox *p_tools, t_sp_cmds *node)
-{
-	t_lexer		*lex_list;
-	int			count;
-	int			trig;
-
-	lex_list = NULL;
-	trig = 0;
-	while (p_tools->lexer_list)
-	{
-		if (p_tools->lexer_list->token != PIPE)
-		{
-			lexer_addback(&lex_list, lexer_new(p_tools->lexer_list->str,
-						p_tools->lexer_list->token));
-		}
-		if (p_tools->lexer_list->token > 0 &&
-				p_tools->lexer_list->token != PIPE)
-		{
-			printf("\n--entering redirections--\n");
-			node = handle_parse_redirections(lex_list);
-		}
-		if (p_tools->lexer_list->token == PIPE)
-		{
-			count = arg_count(lex_list);
-			sp_cmds_addback(&node, sp_cmds_new(init_cmd(count, lex_list)));
-			while (lex_list)
-				lex_list = lex_list->next;
-			trig = 0;
-		}
-		p_tools->lexer_list = p_tools->lexer_list->next;
-	}
-	//printf("\n--entering redirections out while--\n");
-	//node = handle_parse_redirections(lex_list);
-	count = arg_count(lex_list);
-	sp_cmds_addback(&node, sp_cmds_new(init_cmd(count, lex_list)));
-	lex_list_free(lex_list);
+	printf("\nexit cmd_extract\n");
 	return (node);
 }
 
@@ -114,9 +117,12 @@ int	parser(t_toolbox *tools)
 		return (error_token(tools->lexer_list->token));
 	node = NULL;
 	p_tools = init_p_tools(tools);
-	node = cmd_extract(&p_tools, node);
+	node = cmd_extract(p_tools.lexer_list, node);
 	if (!node)
 		return (error_msg("syntax error near unexpected token 'newline'\n"));
+	/*printf("\nnode->redirection:\n");
+	lexer_show(node->redirection);
+	printf("\nnode->hd_filename: %s\n", node->hd_file_name);*/
 	sp_cmds_show(node); //for testing purposes
 	return (0);
 }

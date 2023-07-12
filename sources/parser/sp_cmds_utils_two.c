@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 13:52:34 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/11 09:09:53 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/12 11:14:15 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,25 +61,30 @@ void	sp_cmds_show(t_sp_cmds *list) //only for testing
 	int			a;
 
 	tmp = list;
-	printf("\n");
 	a = 0;
-	while (tmp)
+	i = 0;
+	printf("\n");
+	while (tmp != NULL)
 	{
+		printf("\nhd_file_name: %s\n", list->hd_file_name);
+		printf("\nredirections:\n");
+		lexer_show(list->redirection);
 		if (tmp->cmd)
 		{
 			a++;
-			printf("\n node %d:\n", a);
-			i = 0;
+			printf("\nnode:\n");
 			while (tmp->cmd[i])
 			{
 				printf("%s\n", tmp->cmd[i]);
 				i++;
 			}
+			i = 0;
 		}
-		printf("\nhd_file_name: %s\n", list->hd_file_name);
-		printf("\nredirections:\n");
-		lexer_show(list->redirection);
-		tmp = tmp->next;
+		if (tmp->next)
+			tmp = tmp->next;
+		else
+			break;
 	}
+	printf("\nexiting sp_cmds_show\n");
 	sp_cmds_free(list);
 }
