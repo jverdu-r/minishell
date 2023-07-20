@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:07:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/12 09:26:29 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/20 10:39:28 by jverdu-r         ###   ########.fr       */
 /*   Updated: 2023/06/19 19:53:37 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -105,9 +105,13 @@ int			token_reader(t_toolbox *tools);
 int			token_handler(t_toolbox *tools, int i);
 int			parser(t_toolbox *tools);
 void		lex_list_free(t_lexer *list);
+void		redirection_handler(t_lexer *list, t_sp_cmds **node,
+		t_sp_cmds *aux_node);
 int			file_checker(char *str, char c);
 t_sp_cmds	*handle_parse_redirections(t_lexer *list);
+t_sp_cmds	*cmd_extract(t_lexer *list, t_sp_cmds *node);
 t_token		check_token(char *tk, int i);
+t_lexer		*get_redir(t_lexer *list);
 
 //loop functions
 int		minishell_loop(t_toolbox *tools);

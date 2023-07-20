@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 08:11:35 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/11 09:36:16 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/20 10:39:15 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,3 +73,15 @@ t_sp_cmds	*handle_parse_redirections(t_lexer *list)
 	return (node);
 }
 
+void	redirection_handler(t_lexer *list, t_sp_cmds **node,
+		t_sp_cmds *aux_node)
+{
+	if (list->token > 0 && list->token != PIPE)
+		aux_node->hd_file_name = ft_strdup(list->next->str);
+	aux_node->redirection = get_redir(list);
+	sp_cmds_addback(node, aux_node);
+	while (list)
+	{
+		list = list->next;
+	}
+}
