@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 08:11:35 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/20 10:39:15 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/21 10:45:05 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,28 @@ t_sp_cmds	*handle_parse_redirections(t_lexer *list)
 	return (node);
 }
 
-void	redirection_handler(t_lexer *list, t_sp_cmds **node,
+t_lexer	*redirection_handler(t_lexer *list, t_sp_cmds **node,
 		t_sp_cmds *aux_node)
 {
 	if (list->token > 0 && list->token != PIPE)
 		aux_node->hd_file_name = ft_strdup(list->next->str);
 	aux_node->redirection = get_redir(list);
 	sp_cmds_addback(node, aux_node);
-	while (list)
-	{
+	while (list && list->token != PIPE)
 		list = list->next;
-	}
+	return (list);
+}
+
+t_sp_cmds	*pipe_handler(t_lexer *list)
+{
+	t_sp_cmds	*pipe_node;
+
+	pipe_node = ft_calloc(1, sizeof(t_sp_cmds));
+	pipe_node->cmd = get_cmd(list);
+	list = list->next;
+	while (list && list->next->token != 0)
+		list = list->next;
+	printf("\n entrando en get_redir del pipe_node\n");
+	pipe_node->redirection = get_redir(list);
+	return (pipe_node);
 }

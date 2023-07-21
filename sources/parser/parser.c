@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:35:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/20 11:05:00 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/21 10:42:24 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ t_lexer	*get_redir(t_lexer *list)
 {
 	t_lexer *aux;
 
+	if (!list)
+		return (NULL);
+	lexer_show(list);
 	aux = NULL;
 	while (list->token == 0)
 		list = list->next;
@@ -96,7 +99,11 @@ t_sp_cmds	*cmd_extract(t_lexer *list, t_sp_cmds *node)
 	if (list)
 	{
 		if (list->token > 0 && list->token != PIPE)
-			redirection_handler(list, &node, aux_node);
+			list = redirection_handler(list, &node, aux_node);
+		//printf("\nshowing the rest of the list\n");
+		//lexer_show(list);
+		if (list && list->token  == PIPE)
+			sp_cmds_addback(&node, pipe_handler(list));
 	}
 	else
 		sp_cmds_addback(&node, aux_node);
