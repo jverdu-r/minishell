@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 13:52:34 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/13 08:24:26 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/24 11:21:07 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,35 @@ void	sp_cmds_free(t_sp_cmds *list)
 	}
 }
 
-void	sp_cmds_show(t_sp_cmds *list) //only for testing
+void	sp_cmds_show(t_sp_cmds *list) //for testing
+{
+	int	i;
+	int	a;
+
+	a = 0;
+	while (list)
+	{
+		printf("\n----node %d--\n", a);
+		if (list->cmd)
+		{
+			i = 0;
+			printf("----cmd-----\n");
+			while (list->cmd[i])
+			{
+				printf("%s\n", list->cmd[i]);
+				i++;
+			}
+		}
+		if (list->file)
+			printf("----file----\n%s\n", list->file);
+		if (list->token > 0)
+			printf("----token---\n%d\n", list->token);
+		a++;
+		list = list->next;
+	}
+}
+
+/*void	sp_cmds_show(t_sp_cmds *list) //only for testing
 {
 	t_sp_cmds	*tmp;
 	int			i;
@@ -92,4 +120,4 @@ void	sp_cmds_show(t_sp_cmds *list) //only for testing
 		a++;
 	}
 	sp_cmds_free(list);
-}
+}*/

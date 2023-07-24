@@ -5,109 +5,99 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/21 16:35:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/21 10:42:24 by jverdu-r         ###   ########.fr       */
+/*   Created: 2023/07/24 09:25:35 by jverdu-r          #+#    #+#             */
+/*   Updated: 2023/07/24 11:16:11 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_p_toolbox	init_p_tools(t_toolbox *tools)
+t_p_toolbox init_p_tools(t_toolbox *tools)
 {
 	t_p_toolbox	p_tools;
 
 	p_tools.lexer_list = tools->lexer_list;
 	p_tools.redirections = NULL;
-	p_tools.num_redirections = 0;
+	p_tools.redirections = 0;
 	p_tools.tools = tools;
 	return (p_tools);
 }
 
-char	**get_cmd(t_lexer *list)
+int	word_count(t_lexer *list)
 {
-	char	**cmd;
-	int		i;
-	int		j;
-	t_lexer	*aux;
+	int	i;
 
+	if (!list)
+		return (0);
 	i = 0;
-	aux = list;
-	while (aux)
+	while (list && list->token == 0)
 	{
+		printf("\ntoken: %d", list->token);
 		i++;
-		aux = aux->next;
-	}
-	cmd = ft_calloc(i + 1, sizeof(char *));
-	if (!cmd)
-		return (NULL);
-	j = 0;
-	while (j < i)
-	{
-		if (list->str)
-		{
-			cmd[j] = ft_strdup(list->str);
-			j++;
-		}
 		list = list->next;
 	}
-	cmd[j] = NULL;
+	return (i);
+}
+
+char	**get_cmd(t_lexer *list)
+{
+	int		w_count;
+	char	**cmd;
+	int		i;
+
+	printf("\nentrando en get_cmd\n");
+	if (list == NULL)
+		return (NULL);
+	w_count = word_count(list);
+	cmd = ft_calloc(w_count + 1, sizeof(char *));
+	if (!cmd)
+		return (NULL);
+	i = 0;
+	while (list && list->token == 0)
+	{
+		cmd[i] = ft_strdup(list->str);
+		i++;
+		list = list->next;
+	}
+	cmd[i] = NULL;
 	return (cmd);
 }
 
-t_lexer	*get_redir(t_lexer *list)
+t_sp_cmds	*cmds_extract(t_lexer *list)
 {
-	t_lexer *aux;
+	t_sp_cmds	*node;
+	char		**cmd;
+	t_lexer		*aux;
+	int			tk;
 
 	if (!list)
 		return (NULL);
-	lexer_show(list);
-	aux = NULL;
-	while (list->token == 0)
-		list = list->next;
-	if (list != NULL)
+	aux = list;
+	node = NULL;
+	while (aux)
 	{
-		while (list != NULL)
+		tk = 0;
+		if (aux->token == 0)
 		{
-			if (list->token == PIPE)
-				return (aux);
-			if (list->token)
-				lexer_addback(&aux, lexer_new(NULL, list->token));
-			if (list->str)
-				lexer_addback(&aux, lexer_new(ft_strdup(list->str), 0));
-			list = list->next;
+			cmd = get_cmd(aux);
+			printf("\nnew cmd\n");
+			while (aux && aux->token == 0)
+				aux = aux->next;
+			printf("\nended file check\n");
 		}
+		if (aux && aux->token != 0)
+			tk = aux->token;
+		if (tk > 0)
+		{
+			printf("\nentered node addback\n");
+			sp_cmds_addback(&node, sp_cmds_new(cmd, tk));
+			printf("\nnode added!!\n");
+		}
+		if (aux)
+			aux = aux->next;
 	}
-	return (aux);
-}
-
-t_sp_cmds	*cmd_extract(t_lexer *list, t_sp_cmds *node)
-{
-	t_lexer		*aux;
-	t_sp_cmds	*aux_node;
-
-	aux = NULL;
-	aux_node = ft_calloc(1, sizeof(t_sp_cmds));
-	if (!aux_node)
-		return (NULL);
-	while (list && list->token == 0)
-	{
-		if (list->token == 0)
-			lexer_addback(&aux, lexer_new(ft_strdup(list->str), 0));
-		list = list->next;
-	}
-	aux_node->cmd = get_cmd(aux);
-	if (list)
-	{
-		if (list->token > 0 && list->token != PIPE)
-			list = redirection_handler(list, &node, aux_node);
-		//printf("\nshowing the rest of the list\n");
-		//lexer_show(list);
-		if (list && list->token  == PIPE)
-			sp_cmds_addback(&node, pipe_handler(list));
-	}
-	else
-		sp_cmds_addback(&node, aux_node);
-	printf("\nnode added\n");
+	sp_cmds_addback(&node, sp_cmds_new(cmd, tk));
+	printf("\nnode added!!\n");
 	return (node);
 }
 
@@ -120,10 +110,8 @@ int	parser(t_toolbox *tools)
 		return (error_token(tools->lexer_list->token));
 	node = NULL;
 	p_tools = init_p_tools(tools);
-	node = cmd_extract(p_tools.lexer_list, node);
-	printf("\nnode list created\n");
-	if (!node)
-		return (error_msg("syntax error near unexpected token 'newline'\n"));
-	sp_cmds_show(node); //for testing purposes
+	node = cmds_extract(p_tools.lexer_list);
+	printf("\nnode_list created\n");
+	sp_cmds_show(node);
 	return (0);
 }

@@ -6,13 +6,13 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 08:11:35 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/21 10:45:05 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/24 10:40:49 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	lex_list_free(t_lexer *list)
+/*void	lex_list_free(t_lexer *list)
 {
 	if (list)
 	{
@@ -25,7 +25,7 @@ void	lex_list_free(t_lexer *list)
 		}
 		free(list);
 	}
-}
+}*/
 
 int	file_checker(char	*str, char c)
 {
@@ -44,7 +44,7 @@ int	file_checker(char	*str, char c)
 	return (0);
 }
 
-t_sp_cmds	*handle_parse_redirections(t_lexer *list)
+/*t_sp_cmds	*handle_parse_redirections(t_lexer *list)
 {
 	t_lexer		*redir;
 	t_sp_cmds	*node;
@@ -97,4 +97,4 @@ t_sp_cmds	*pipe_handler(t_lexer *list)
 	printf("\n entrando en get_redir del pipe_node\n");
 	pipe_node->redirection = get_redir(list);
 	return (pipe_node);
-}
+}*/

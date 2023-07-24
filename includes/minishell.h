@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:07:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/21 10:29:12 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/24 11:21:05 by jverdu-r         ###   ########.fr       */
 /*   Updated: 2023/06/19 19:53:37 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -43,8 +43,10 @@ typedef struct	s_lexer
 typedef struct	s_sp_cmds
 {
 	char				**cmd;
-	char				*hd_file_name;
-	t_lexer				*redirection;
+	int					token;
+	char				*file;
+	/*char				*hd_file_name;
+	t_lexer				*redirection;*/
 	struct s_sp_cmds	*next;
 	struct s_sp_cmds	*prev;
 }	t_sp_cmds;
@@ -97,23 +99,24 @@ void		sp_cmds_delone(t_sp_cmds **list);
 void		sp_cmds_free(t_sp_cmds *list);
 void		sp_cmds_show(t_sp_cmds *list); //frees list  only for testing
 int			sp_cmds_length(t_sp_cmds *list);
-t_sp_cmds	*sp_cmds_new(char **cmd);
+t_sp_cmds	*sp_cmds_new(char **cmd, int token);
 t_sp_cmds	*sp_cmds_last(t_sp_cmds *list);
 
 //parse functions
-int			token_reader(t_toolbox *tools);
-int			token_handler(t_toolbox *tools, int i);
 int			parser(t_toolbox *tools);
-char		**get_cmd(t_lexer *list);
+int			file_checker(char *str, char c);
+int			token_reader(t_toolbox *tools);
+t_token		check_token(char *tk, int i);
+int			token_handler(t_toolbox *tools, int i);
+/*char		**get_cmd(t_lexer *list);
 void		lex_list_free(t_lexer *list);
-t_lexer		*redirection_handler(t_lexer *list, t_sp_cmds **node,
+/t_lexer		*redirection_handler(t_lexer *list, t_sp_cmds **node,
 		t_sp_cmds *aux_node);
 int			file_checker(char *str, char c);
 t_sp_cmds	*handle_parse_redirections(t_lexer *list);
 t_sp_cmds	*cmd_extract(t_lexer *list, t_sp_cmds *node);
 t_sp_cmds	*pipe_handler(t_lexer *list);
-t_token		check_token(char *tk, int i);
-t_lexer		*get_redir(t_lexer *list);
+t_lexer		*get_redir(t_lexer *list);*/
 
 //loop functions
 int		minishell_loop(t_toolbox *tools);

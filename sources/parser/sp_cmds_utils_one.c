@@ -6,20 +6,32 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 13:31:45 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/27 09:47:10 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/24 10:58:42 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_sp_cmds	*sp_cmds_new(char	**cmd)
+t_sp_cmds	*sp_cmds_new(char	**cmd, int token)
 {
 	t_sp_cmds	*new;
+	int			i;
 
 	new = malloc(sizeof(t_sp_cmds));
 	if (!new)
 		return (NULL);
+	i = 0;
 	new->cmd = cmd;
+	while (cmd[i])
+	{
+		if (file_checker(cmd[i], '.'))
+			new->file = cmd[i];
+		i++;
+	}
+	printf("\ncmd added!!\n");
+	if (!new->file)
+		new->file = NULL;
+	new->token = token;
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);
