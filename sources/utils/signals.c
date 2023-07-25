@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 14:52:14 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/17 12:31:25 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/25 11:02:05 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static void	signal_int(int code)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-
 }
+
 void	signals_workout(void)
 {
 	signal(SIGINT, signal_int);

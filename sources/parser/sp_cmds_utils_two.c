@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 13:52:34 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/24 11:21:07 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/25 08:44:31 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	sp_cmds_free(t_sp_cmds *list)
 		{
 			if (list->cmd)
 				free_arr(list->cmd);
+			if (list->file)
+				free(list->file);
 			list = list->next;
 			free(list->prev);
 		}
@@ -47,14 +49,14 @@ void	sp_cmds_free(t_sp_cmds *list)
 		{
 			if (list->cmd)
 				free_arr(list->cmd);
-
+			if (list->file)
+				free(list->file);
 		}
-		free(list->cmd);
 		free(list);
 	}
 }
 
-void	sp_cmds_show(t_sp_cmds *list) //for testing
+void	sp_cmds_show(t_sp_cmds *list)
 {
 	int	i;
 	int	a;
@@ -81,43 +83,3 @@ void	sp_cmds_show(t_sp_cmds *list) //for testing
 		list = list->next;
 	}
 }
-
-/*void	sp_cmds_show(t_sp_cmds *list) //only for testing
-{
-	t_sp_cmds	*tmp;
-	int			i;
-	int			a;
-
-	tmp = list;
-	a = 0;
-	i = 0;
-	printf("\n");
-	while (tmp != NULL)
-	{
-		printf("\n---node %d---:\n", a);
-		printf("\nhd_file_name: %s\n", list->hd_file_name);
-		printf("\n----------\n");
-		printf("\nredirections:\n");
-		lexer_show(list->redirection);
-		printf("\n----------\n");
-		if (tmp->cmd)
-		{;
-			while (tmp->cmd[i])
-			{
-				printf("%s\n", tmp->cmd[i]);
-				i++;
-			}
-			i = 0;
-		}
-		printf("\n----------\n");
-		if (tmp->next)
-		{
-			tmp = tmp->next;
-		}
-		
-		else
-			break;
-		a++;
-	}
-	sp_cmds_free(list);
-}*/

@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 12:33:17 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/20 16:55:48 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/25 11:01:14 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,3 @@ char	**envp_dup(char	**envp, t_toolbox *tools)
 	//tools->sort_env = st_envp(tools, envp);
 	return (tmp);
 }
-
-

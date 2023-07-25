@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 13:31:45 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/24 10:58:42 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/25 08:47:12 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,17 @@ t_sp_cmds	*sp_cmds_new(char	**cmd, int token)
 	if (!new)
 		return (NULL);
 	i = 0;
-	new->cmd = cmd;
+	if (!file_checker(cmd[i], '.'))
+		new->cmd = cmd;
 	while (cmd[i])
 	{
 		if (file_checker(cmd[i], '.'))
-			new->file = cmd[i];
+			new->file = ft_strdup(cmd[i]);
 		i++;
 	}
-	printf("\ncmd added!!\n");
-	if (!new->file)
+	if (new->file)
+		free_arr(cmd);
+	else
 		new->file = NULL;
 	new->token = token;
 	new->next = NULL;
@@ -70,7 +72,7 @@ void	sp_cmds_delone(t_sp_cmds **list)
 void	sp_cmds_add(t_sp_cmds **head, t_sp_cmds *new)
 {
 	t_sp_cmds	*tmp;
-	
+
 	tmp = *head;
 	if (*head == NULL)
 		*head = new;

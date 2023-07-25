@@ -6,13 +6,13 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 09:25:35 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/24 11:16:11 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/25 08:34:52 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_p_toolbox init_p_tools(t_toolbox *tools)
+t_p_toolbox	init_p_tools(t_toolbox *tools)
 {
 	t_p_toolbox	p_tools;
 
@@ -32,7 +32,6 @@ int	word_count(t_lexer *list)
 	i = 0;
 	while (list && list->token == 0)
 	{
-		printf("\ntoken: %d", list->token);
 		i++;
 		list = list->next;
 	}
@@ -45,7 +44,6 @@ char	**get_cmd(t_lexer *list)
 	char	**cmd;
 	int		i;
 
-	printf("\nentrando en get_cmd\n");
 	if (list == NULL)
 		return (NULL);
 	w_count = word_count(list);
@@ -80,24 +78,15 @@ t_sp_cmds	*cmds_extract(t_lexer *list)
 		if (aux->token == 0)
 		{
 			cmd = get_cmd(aux);
-			printf("\nnew cmd\n");
 			while (aux && aux->token == 0)
 				aux = aux->next;
-			printf("\nended file check\n");
 		}
-		if (aux && aux->token != 0)
-			tk = aux->token;
-		if (tk > 0)
-		{
-			printf("\nentered node addback\n");
-			sp_cmds_addback(&node, sp_cmds_new(cmd, tk));
-			printf("\nnode added!!\n");
-		}
+		if (aux && aux->token > 0)
+			sp_cmds_addback(&node, sp_cmds_new(cmd, aux->token));
 		if (aux)
 			aux = aux->next;
 	}
 	sp_cmds_addback(&node, sp_cmds_new(cmd, tk));
-	printf("\nnode added!!\n");
 	return (node);
 }
 
@@ -111,7 +100,7 @@ int	parser(t_toolbox *tools)
 	node = NULL;
 	p_tools = init_p_tools(tools);
 	node = cmds_extract(p_tools.lexer_list);
-	printf("\nnode_list created\n");
 	sp_cmds_show(node);
+	sp_cmds_free(node);
 	return (0);
 }

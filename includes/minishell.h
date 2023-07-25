@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:07:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/24 11:21:05 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/25 10:46:37 by jverdu-r         ###   ########.fr       */
 /*   Updated: 2023/06/19 19:53:37 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -45,8 +45,6 @@ typedef struct	s_sp_cmds
 	char				**cmd;
 	int					token;
 	char				*file;
-	/*char				*hd_file_name;
-	t_lexer				*redirection;*/
 	struct s_sp_cmds	*next;
 	struct s_sp_cmds	*prev;
 }	t_sp_cmds;
@@ -106,17 +104,8 @@ t_sp_cmds	*sp_cmds_last(t_sp_cmds *list);
 int			parser(t_toolbox *tools);
 int			file_checker(char *str, char c);
 int			token_reader(t_toolbox *tools);
-t_token		check_token(char *tk, int i);
 int			token_handler(t_toolbox *tools, int i);
-/*char		**get_cmd(t_lexer *list);
-void		lex_list_free(t_lexer *list);
-/t_lexer		*redirection_handler(t_lexer *list, t_sp_cmds **node,
-		t_sp_cmds *aux_node);
-int			file_checker(char *str, char c);
-t_sp_cmds	*handle_parse_redirections(t_lexer *list);
-t_sp_cmds	*cmd_extract(t_lexer *list, t_sp_cmds *node);
-t_sp_cmds	*pipe_handler(t_lexer *list);
-t_lexer		*get_redir(t_lexer *list);*/
+t_token		check_token(char *tk, int i);
 
 //loop functions
 int		minishell_loop(t_toolbox *tools);
@@ -131,6 +120,7 @@ int		pwd_search(t_toolbox *tools);
 //utility functions
 void	free_arr(char **arr);
 int		handle_quotes(char *input);
+int		check_input(t_toolbox *tools);
 
 //error functions
 int		error_msg(char *msg);
