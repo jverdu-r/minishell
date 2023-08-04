@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 12:14:37 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/25 11:00:21 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/26 10:11:23 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,31 @@ int	tools_load(t_toolbox *tools)
 
 int	exit_code(void)
 {
-	rl_clear_history();
+	system("leaks minishell");
 	printf("\nEXIT\n");
+	rl_clear_history();
 	exit(0);
 }
 
 int	minishell_loop(t_toolbox *tools)
 {
+	//char	*input;
+	int	exit;
+	
 	while (1)
 	{
+		exit = 0;
 		signals_workout();
-		//tools->args = readline("minishell>");
-		check_input(tools);
-		if (!tools->args)
+	/*	tools->args = readline("minishell>");
+		input = ft_strtrim(tools->args, " ");
+		free(tools->args);
+		tools->args = input;*/
+		exit = check_input(tools);
+		if (!tools->args && exit == 0)
 			return (exit_code());
-		else if (ft_strcmp(tools->args, "") == 0)
+		else if (tools->args && ft_strcmp(tools->args, "") == 0)
 			free(tools->args);
-		else
+		else if (tools->args)
 		{
 			add_history(tools->args);
 			if (!handle_quotes(tools->args))

@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 14:52:14 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/25 11:02:05 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/26 09:48:06 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ static void	signal_int(int code)
 
 void	signals_workout(void)
 {
-	signal(SIGINT, signal_int);
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, signal_int);
 }
