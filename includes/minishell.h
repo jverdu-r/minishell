@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:07:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/26 09:48:18 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/08/04 17:09:42 by jverdu-r         ###   ########.fr       */
 /*   Updated: 2023/06/19 19:53:37 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -121,6 +121,7 @@ int		pwd_search(t_toolbox *tools);
 void	free_arr(char **arr);
 int		handle_quotes(char *input);
 int		check_input(t_toolbox *tools);
+int		exit_code(void);
 
 //error functions
 int		error_msg(char *msg);

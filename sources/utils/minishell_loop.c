@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 12:14:37 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/26 10:11:23 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/08/04 17:41:48 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 void	tools_reload(t_toolbox *tools)
 {
 	lexer_free(tools->lexer_list);
-	free(tools->args);
+	sp_cmds_free(tools->sp_cmds);
 	tools->args = NULL;
-	tools->sp_cmds = NULL;
 	tools->lexer_list = NULL;
 }
 
@@ -30,7 +29,6 @@ int	tools_load(t_toolbox *tools)
 
 int	exit_code(void)
 {
-	system("leaks minishell");
 	printf("\nEXIT\n");
 	rl_clear_history();
 	exit(0);
@@ -39,13 +37,13 @@ int	exit_code(void)
 int	minishell_loop(t_toolbox *tools)
 {
 	//char	*input;
-	int	exit;
-	
+	int		exit;
+
 	while (1)
 	{
 		exit = 0;
 		signals_workout();
-	/*	tools->args = readline("minishell>");
+		/*tools->args = readline("minishell>");
 		input = ft_strtrim(tools->args, " ");
 		free(tools->args);
 		tools->args = input;*/

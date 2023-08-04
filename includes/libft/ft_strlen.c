@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 16:41:48 by jverdu-r          #+#    #+#             */
-/*   Updated: 2022/02/11 18:14:42 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/08/04 16:42:08 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@ size_t	ft_strlen(const char *a)
 	int		b;
 
 	b = 0;
-	while (*a)
-	{
-		a++;
+	if (a == NULL)
+		return (0);
+	while (a[b])
 		b++;
-	}
 	return (b);
 }

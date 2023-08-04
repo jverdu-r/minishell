@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 09:25:35 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/26 10:24:07 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/08/04 16:19:34 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,5 @@ int	parser(t_toolbox *tools)
 	p_tools = init_p_tools(tools);
 	node = cmds_extract(p_tools.lexer_list);
 	sp_cmds_show(node);
-	sp_cmds_free(node);
-	return (0);
-}
+	//1sp_cmds_free(node);
+	return (0); }
