@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 12:58:17 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/08/04 17:42:06 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/08/09 09:14:27 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	check_input(t_toolbox *tools)
 {
 	char	*aux;
 	char	*input;
+	char	*pipe;
 
 	input = readline("minishell>");
 	if (input)
@@ -70,21 +71,20 @@ int	check_input(t_toolbox *tools)
 		while (input[ft_strlen(input) - 1] == '|')
 		{
 			aux = readline(">");
-			input = ft_strjoin(input, aux);
+			pipe = input;
+			input = ft_strjoin(pipe, aux);
+			free(pipe);
 			free(aux);
+			if (!check_input_end(input[ft_strlen(input) - 1]))
+			{
+				add_history(input);
+				free(input);
+				printf("sintax parse error\n");
+				return (1);
+			}
 		}
-		if (!check_input_end(input[ft_strlen(input) - 1]))
-		{
-			add_history(input);
-			printf("sintax parse error\n");
-			free(input);
-			return (1);
-		}
-		else
-		{
-			tools->args = ft_strtrim(input, " ");
-			free(input);
-		}
+		tools->args = ft_strtrim(input, " ");
+		free(input);
 		return (1);
 	}
 	return (0);

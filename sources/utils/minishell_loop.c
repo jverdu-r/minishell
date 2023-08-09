@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 12:14:37 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/08/04 17:41:48 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/08/09 09:10:33 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	tools_reload(t_toolbox *tools)
 {
 	lexer_free(tools->lexer_list);
-	sp_cmds_free(tools->sp_cmds);
+	if (tools->args)
+		free(tools->args);
 	tools->args = NULL;
 	tools->lexer_list = NULL;
 }
@@ -43,10 +44,6 @@ int	minishell_loop(t_toolbox *tools)
 	{
 		exit = 0;
 		signals_workout();
-		/*tools->args = readline("minishell>");
-		input = ft_strtrim(tools->args, " ");
-		free(tools->args);
-		tools->args = input;*/
 		exit = check_input(tools);
 		if (!tools->args && exit == 0)
 			return (exit_code());
