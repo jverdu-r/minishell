@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 12:33:17 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/07/25 11:01:14 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/08/09 11:38:47 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,52 @@ int	pwd_search(t_toolbox *tools)
 	return (i);
 }
 
-/*char	**st_envp(t_toolbox *tools, char **envp)
+char	**st_envp(char **envp)
 {
+	char	**sorted;
+	char	*aux;
 	int		i;
-	int		k;
-	char	*index;
-	char	**sort_env;
+	int		j;
 
 	i = 0;
-	while (envp[i])
+	sorted = envp;
+	while (sorted[i])
+	{
+		j = i + 1;
+		while (sorted[j])
+		{
+			if (ft_strcmp(sorted[i], sorted[j]) > 0)
+			{
+				aux = sorted[j];
+				sorted[j] = sorted[i];
+				sorted[i] = aux;
+			}
+			j++;
+		}
 		i++;
-	index = ft_calloc(sizeof(int), i);
-	sort_env = ft_calloc(sizeof(char *), i + 1);
-	
-}*/
+	}
+	return (sorted);
+}
+
+void	show_env(t_toolbox *tools)
+{
+	int i;
+
+	i = 0;
+	printf("\n---unsorted env---\n");
+	while (tools->env[i])
+	{
+		printf("%s\n", tools->env[i]);
+		i++;
+	}
+	i = 0;
+	printf("\n---sorted env---\n");
+	while (tools->sort_env[i])
+	{
+		printf("%s\n", tools->sort_env[i]);
+		i++;
+	}
+}
 
 char	**envp_dup(char	**envp, t_toolbox *tools)
 {
@@ -68,6 +100,8 @@ char	**envp_dup(char	**envp, t_toolbox *tools)
 		}
 		i++;
 	}
-	//tools->sort_env = st_envp(tools, envp);
+	tools->env = tmp;
+	tools->sort_env = st_envp(envp);
+	show_env(tools); //for testing;
 	return (tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:07:55 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/08/04 17:09:42 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/08/09 10:34:53 by jverdu-r         ###   ########.fr       */
 /*   Updated: 2023/06/19 19:53:37 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -49,18 +49,19 @@ typedef struct	s_sp_cmds
 	struct s_sp_cmds	*prev;
 }	t_sp_cmds;
 
-typedef struct s_env
+/*typedef struct s_env
 {
 	char	*var;
 	void	*next;
-}	t_env;
+}	t_env;*/
 
 typedef struct	s_toolbox
 {
 	char		*args;
 	char		**env;
-	t_env		envp;
-	t_env		sort_envp;
+	char		**sort_env;
+	//t_env		envp;
+	//t_env		sort_envp;
 	char		*env_rute;
 	char		*pwd;
 	char		*old_pwd;
@@ -114,7 +115,7 @@ void	tools_reload(t_toolbox *tools);
 
 //enviroment functions
 char	**envp_dup(char **envp, t_toolbox *tools);
-char	 **st_envp(t_toolbox *tools, char **env);
+//char	 **st_envp(t_toolbox *tools, char **env);
 int		pwd_search(t_toolbox *tools);
 
 //utility functions
