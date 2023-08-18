@@ -6,13 +6,13 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 08:40:43 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/08/17 10:01:48 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/08/18 09:15:43 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*close_quote(char *str)
+/*char	*close_quote(char *str)
 {
 	char	input;
 	char	*aux;
@@ -34,7 +34,7 @@ char	*close_quote(char *str)
 	free(temp);
 	free(input);
 	return(str);
-}
+}*///codigo reutilizable para echo built-in
 
 int	check_quotes(char *str)
 {
@@ -58,68 +58,62 @@ int	check_quotes(char *str)
 		return (0);
 }
 
-char	*extract_var(char **vars, char *str)
+int	var_search(char **gvars, char *var)
 {
-	if (!str)
+	int	pos;
+
+	pos = 0;
+	while (gvars[pos])
+	{
+		if (ft_strnstr(gvars[pos], var, ft_strlen(var)))
+			return (pos);
+		pos++;
+	}
+	return (-1);
+}
+
+char	*extract_var(char **vars, char *str, int quote)
+{
+	int		part;
+	int		var_pos;
+	char	*var;
+	char	**s_var;
+
+	part = 0;
+	if (quote == 1)
+	{
+		if (str[0] == '\"')
+			part = 1;
+		var = ft_substr(str, 2, ft_strlen(str) - 3);
+	}
+	else
+		var = ft_substr(str, 1, ft_strlen(str) - 1);
+	var_pos = var_search(vars, var);
+	if (var_pos >= 0)
+	{
+		s_var = ft_split(vars[var_pos], '=');
+		return (s_var[part]);
+	}
+	else
 		return (NULL);
-	if (str[0] != '$')
-		return (str);
 }
 
 char	*expander(t_toolbox *tools, char *str)
 {
-	int		quote_ck;
 	char	*var;
 
-	quote_ck = 0;
+	var = NULL;
 	if (str[0] == '\'' || str[0] == '\"')
 	{
-		quote_ck = check_quotes(str);
-		if (quote_ck == 2)
-		{
-			var = close_quote(str);
-		}
+		if (check_quotes(str) == 1 && str[1] == '$')
+			var = extract(tools->env, str, 1);
 		else
-			var = str;
-		return (extract_var(tools->env,
-					ft_substr(var, var[1], ft_strlen(var) - 2)));
+		{
+			error_msg("Global var sintax error");
+			return (NULL)
+		}
 	}
 	else if (str[0] == '$')
-		return (extract_var(tools->env, str));
+		var = extract_var(tools->env, str, 0);
+	return (var);
 }
-/*
-char	*expander(t_toolbox *tools, char *str)
-{
-	int		i;
-	int		j;
-	char	*aux;
-
-	j = 0;
-	if ((str[0] == '\'' || str[0] == '\"') && str[1] == '$')
-	{
-		i = 1;
-		while (str[i] && str[i] != str[0])
-			i++;
-		if (str[i] == '\0')
-		{
-			printf("\nerror unclosed quotes\n");
-			return (NULL);
-		}
-		else
-		{
-			aux = malloc(sizeof(char) * (i - 2));
-			if (!aux)
-				return (NULL);
-			i = 2;
-			while (str[i] && str[i] != str[0])
-			{
-				aux[j] = str[i];
-				i++;
-				j++;
-			}
-			aux[j] = '\0';
-		}
-		return (aux);
-	}
-	return (NULL);
-}*/
