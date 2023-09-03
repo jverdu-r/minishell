@@ -6,7 +6,7 @@
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 13:52:34 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/06/19 16:19:56 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2023/07/26 10:38:02 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,40 +38,48 @@ void	sp_cmds_free(t_sp_cmds *list)
 	{
 		while (list->next)
 		{
-			if (list->cmd)
+			if (list->file)
+				free(list->file);
+			else
 				free_arr(list->cmd);
 			list = list->next;
 			free(list->prev);
 		}
 		if (!list->next)
 		{
-			if (list->cmd)
+			if (list->file)
+				free(list->file);
+			else
 				free_arr(list->cmd);
-
 		}
 		free(list);
 	}
 }
 
-void	sp_cmds_show(t_sp_cmds *list) //only for testing
+void	sp_cmds_show(t_sp_cmds *list)
 {
-	t_sp_cmds	*tmp;
-	int			i;
+	int	i;
+	int	a;
 
-	tmp = list;
-	printf("\n");
-	while (tmp)
+	a = 0;
+	while (list)
 	{
-		if (tmp->cmd)
+		printf("\n----node %d--\n", a);
+		if (list->file)
+			printf("----file----\n%s\n", list->file);
+		if (list->cmd)
 		{
 			i = 0;
-			while (tmp->cmd[i])
+			printf("----cmd-----\n");
+			while (list->cmd[i])
 			{
-				printf("%s\n", tmp->cmd[i]);
+				printf("%s\n", list->cmd[i]);
 				i++;
 			}
 		}
+		if (list->token > 0)
+			printf("----token---\n%d\n", list->token);
+		a++;
+		list = list->next;
 	}
-	printf("\n");
-	sp_cmds_free(list);
 }

@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/19 16:41:48 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/08/04 16:42:08 by jverdu-r         ###   ########.fr       */
+/*   Created: 2023/07/04 08:11:35 by jverdu-r          #+#    #+#             */
+/*   Updated: 2023/07/25 08:26:18 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "../../includes/minishell.h"
 
-size_t	ft_strlen(const char *a)
+int	file_checker(char	*str, char c)
 {
-	int		b;
+	int	i;
 
-	b = 0;
-	if (a == NULL)
-		return (0);
-	while (a[b])
-		b++;
-	return (b);
+	if (str)
+	{
+		i = 0;
+		while (str[i])
+		{
+			if (str[i] == c)
+				return (1);
+			i++;
+		}
+	}
+	return (0);
 }
