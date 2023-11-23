@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   tokens.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/14 17:58:08 by jverdu-r          #+#    #+#             */
-/*   Updated: 2022/03/28 16:31:46 by jverdu-r         ###   ########.fr       */
+/*   Created: 2023/10/10 09:45:51 by jverdu-r          #+#    #+#             */
+/*   Updated: 2023/11/03 17:21:21 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef TOKENS_H
+#define TOKENS_H
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
-{
-	t_list	*tmp;
+#include "minishell.h"
+#include "structs.h"
 
-	if (lst)
-	{
-		if (*lst == NULL)
-			*lst = new;
-		else
-		{
-			tmp = ft_lstlast(*(lst));
-			tmp->next = new;
-		}
-	}
-}
+t_token	check_token(char *tk, int i);
+
+t_command   *init_cmd(void);
+void    comm_addback(t_command **head, t_command *new);
+void    cmd_show(t_command *cmd);
+void    cmd_free(t_command *cmd);
+
+#endif

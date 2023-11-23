@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: davidaparicio <davidaparicio@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/19 16:41:48 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/09/09 17:55:46 by daparici         ###   ########.fr       */
+/*   Created: 2023/09/14 13:39:05 by davidaparic       #+#    #+#             */
+/*   Updated: 2023/09/14 14:16:29 by davidaparic      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "../../includes/minishell.h"
 
-size_t	ft_strlen(const char *a)
+void    ft_env(char **env)
 {
-	int		b;
+    int i;
 
-	b = 0;
-	if (a == NULL)
-		return (0);
-	while (a[b])
-		b++;
-	return (b);
+    i = 0;
+    while(env[i])
+    {
+        ft_putendl_fd(env[i], STDOUT_FILENO);
+        i++;
+    }
 }

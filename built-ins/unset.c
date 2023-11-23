@@ -1,25 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: davidaparicio <davidaparicio@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/19 16:41:48 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/09/09 17:55:46 by daparici         ###   ########.fr       */
+/*   Created: 2023/09/05 19:50:15 by daparici          #+#    #+#             */
+/*   Updated: 2023/09/09 16:03:25 by davidaparic      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "../../includes/minishell.h"
 
-size_t	ft_strlen(const char *a)
-{
-	int		b;
-
-	b = 0;
-	if (a == NULL)
-		return (0);
-	while (a[b])
-		b++;
-	return (b);
-}
+void	ft_unset()

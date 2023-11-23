@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/14 17:58:08 by jverdu-r          #+#    #+#             */
-/*   Updated: 2022/03/28 16:31:46 by jverdu-r         ###   ########.fr       */
+/*   Created: 2023/06/08 14:52:14 by jverdu-r          #+#    #+#             */
+/*   Updated: 2023/08/04 16:39:50 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/minishell.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+static void	signal_int(int code)
 {
-	t_list	*tmp;
+	(void)code;
+	printf("minishell>");
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
 
-	if (lst)
-	{
-		if (*lst == NULL)
-			*lst = new;
-		else
-		{
-			tmp = ft_lstlast(*(lst));
-			tmp->next = new;
-		}
-	}
+void	signals_workout(void)
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, signal_int);
 }

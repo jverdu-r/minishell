@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/19 16:41:48 by jverdu-r          #+#    #+#             */
-/*   Updated: 2023/09/09 17:55:46 by daparici         ###   ########.fr       */
+/*   Created: 2023/09/09 16:53:02 by daparici          #+#    #+#             */
+/*   Updated: 2023/11/23 18:34:41 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "../../includes/minishell.h"
 
-size_t	ft_strlen(const char *a)
+void	ft_executor(t_toolbox *tools)
 {
-	int		b;
+	int			exit;
+	t_command	*cmd;
 
-	b = 0;
-	if (a == NULL)
-		return (0);
-	while (a[b])
-		b++;
-	return (b);
+	exit = 0;
+	cmd = tools->cmd;
+	while (cmd)
+	{
+		if (ft_strcmp(cmd->cmd, "pwd") == 0)
+			exit = ft_pwd();
+		if (ft_strcmp(cmd->cmd, "echo") == 0)
+			ft_echo(cmd);
+		if (ft_strcmp(cmd->cmd, "env") == 0)
+			ft_env(tools->env);
+		if (ft_strcmp(cmd->cmd, "export") == 0)
+			ft_export(tools);
+		cmd = cmd->next;
+	}
 }

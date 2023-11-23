@@ -1,29 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   utils_two.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jverdu-r <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/14 17:58:08 by jverdu-r          #+#    #+#             */
-/*   Updated: 2022/03/28 16:31:46 by jverdu-r         ###   ########.fr       */
+/*   Created: 2023/09/19 10:53:31 by jverdu-r          #+#    #+#             */
+/*   Updated: 2023/11/22 17:37:15 by jverdu-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/minishell.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+char	*fully_prompt(char *input, char c)
 {
-	t_list	*tmp;
+	char	*aux;
+	char	*pipe;
 
-	if (lst)
+	if (c == '|')
 	{
-		if (*lst == NULL)
-			*lst = new;
-		else
+		while (input[ft_strlen(input) - 1] == '|')
 		{
-			tmp = ft_lstlast(*(lst));
-			tmp->next = new;
+			aux = readline(">");
+			pipe = input;
+			input = ft_strjoin(pipe, aux);
+			free(pipe);
+			free(aux);
 		}
 	}
+	return (input);
+}
+
+t_bool	switch_bool(t_bool bool)
+{
+	if (bool == FALSE)
+		bool = TRUE;
+	else
+		bool = FALSE;
+	return (bool);
 }
