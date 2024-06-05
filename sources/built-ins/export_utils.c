@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jverdu-r <jverdu-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jorge <jorge@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 17:52:40 by daparici          #+#    #+#             */
-/*   Updated: 2024/05/26 10:40:51 by jverdu-r         ###   ########.fr       */
+/*   Updated: 2024/05/30 19:21:24 by jorge            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	check_variable_exist(t_toolbox *tools, char *cmd_arg)
 		if (!ft_strncmp(tools->env[i], cmd_arg, lenght_to_equal(cmd_arg))
 			&& (lenght_to_equal(cmd_arg) == lenght_to_equal(tools->env[i])))
 		{
+			if (!cmd_arg[lenght_to_equal(cmd_arg)])
+				return (1);
 			free(tools->env[i]);
 			tools->env[i] = ft_strdup(cmd_arg);
 			return (1);

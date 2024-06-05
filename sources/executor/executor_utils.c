@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jorge <jorge@student.42.fr>                +#+  +:+       +#+        */
+/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 22:21:02 by davidaparic       #+#    #+#             */
-/*   Updated: 2024/05/23 18:33:27 by jorge            ###   ########.fr       */
+/*   Updated: 2024/05/25 18:39:50 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,3 @@ char	*find_paths(char **envp)
 	}
 	return (NULL);
 }
-/*char	*find_paths(char **envp)
-{
-	while (*envp && ft_strncmp("PATH", *envp, 4))
-		envp++;
-	if (*envp)
-		return (*envp + 5);
-	else
-		return (NULL);
-}*/

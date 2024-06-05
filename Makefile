@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jverdu-r <jverdu-r@student.42.fr>          +#+  +:+       +#+         #
+#    By: jorge <jorge@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/24 15:20:41 by jverdu-r          #+#    #+#              #
-#    Updated: 2024/05/21 16:31:09 by jverdu-r         ###   ########.fr        #
+#    Updated: 2024/05/30 18:35:13 by jorge            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,10 +43,10 @@ SRCS	=	sources/main.c \
 			sources/parser/command_utils.c \
 			sources/parser/redir_utils.c \
 			sources/parser/parser.c \
+			sources/parser/parser_utils.c \
 			sources/parser/handle_redirs.c \
 			sources/error/errors.c \
 			sources/expander/expander_one.c \
-			sources/expander/expander_bis.c \
 			sources/expander/expander_utils_one.c \
 			sources/expander/expander_utils_two.c \
 			sources/built-ins/echo.c \

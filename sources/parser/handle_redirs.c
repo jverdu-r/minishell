@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirs.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davidaparicio <davidaparicio@student.42    +#+  +:+       +#+        */
+/*   By: jorge <jorge@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:22:42 by jverdu-r          #+#    #+#             */
-/*   Updated: 2024/03/19 00:04:47 by davidaparic      ###   ########.fr       */
+/*   Updated: 2024/06/03 09:30:40 by jorge            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,12 @@ int	get_fds(t_command *raw_cmd)
 		if (cmd->in_fd == -1 && !cmd->next)
 			return (1);
 		if (cmd->out_files)
-			check_out_fd(cmd);
+		{
+			if (check_void_redir(cmd->out_files->file))
+				check_out_fd(cmd);
+			else
+				return (1);
+		}
 		if (cmd->next)
 			cmd = cmd->next;
 		else
